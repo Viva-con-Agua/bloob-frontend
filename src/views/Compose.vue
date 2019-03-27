@@ -12,17 +12,17 @@
 
       <div class="mt-2">Empfänger: {{ form.reciever }}</div>
         
-      <b-form-group id="exampleInputGroup1" label="Senden als:" label-for="exampleInput1">
-        <b-form-select id="exampleInput1" :options="sender_name" required v-model="form.sender_name" />
+      <b-form-group id="senderNameGroup" label="Senden als:" label-for="senderName">
+        <b-form-select id="senderName" :options="sender_name" required v-model="form.sender_name" />
       </b-form-group>
 
-      <b-form-group id="exampleInputGroup2" label="Senden von:" label-for="exampleInput2">
-        <b-form-select id="exampleInput2" :options="sender_mail" required v-model="form.sender_mail" />
+      <b-form-group id="senderMailGroup" label="Senden von:" label-for="senderMail">
+        <b-form-select id="senderMail" :options="sender_mail" required v-model="form.sender_mail" />
       </b-form-group>
 
-      <b-form-group id="exampleInputGroup3" label="Betreff:" label-for="exampleInput3">
+      <b-form-group id="subjectLineGroup" label="Betreff:" label-for="subjectLine">
         <b-form-input
-          id="exampleInput3"
+          id="subjectLine"
           type="text"
           v-model="form.subject"
           required
@@ -38,9 +38,9 @@
       </b-form-group>
 
 <!-- replace with WYSIWYG/Mosaico editor -->
-      <b-form-group id="exampleInputGroup5" label="Nachricht:" label-for="exampleInput5"> 
+      <b-form-group id="messageEditor" label="Nachricht:" label-for="messageEditor"> 
         <b-form-textarea
-          id="exampleInput5"
+          id="messageEditor"
           type="text"
           v-model="form.message"
           required
@@ -60,52 +60,53 @@
 // @ is an alias to /src
 
 
-  export default {
-    name: "compose",
-    components: {
-    },
-    data() {
-      return {
-        reciever_selection: '',
-        form: {
-          reciever: [],
-          sender_name: null,
-          sender_mail: null,
-          subject: '',
-          message: '',
-          checked: []
-        },
-        sender_name: [{ text: 'Select One', value: null }, 'Max Musterman', 'ASP Aktionen'],
-        // TODO: get user name and role from Drops
-        sender_mail: [{ text: 'Select One', value: null }, 'noreply@vivaconagua.org', 'berlin@vivaconagua.org', 'maxmusterman@vivaconagua.org'],
-        // TODO: get user role from Drops and check access rights to mail adresses
-        show: true
-      }
-    },
-    methods: {
-      onSubmit(evt) {
-        evt.preventDefault()
-        alert(JSON.stringify(this.form))
+export default {
+  name: "compose",
+  components: {
+  },
+  data() {
+    return {
+      reciever_selection: '',
+      form: {
+        reciever: [],
+        sender_name: null,
+        sender_mail: null,
+        subject: '',
+        message: '',
+        checked: []
       },
-      onReset(evt) {
-        evt.preventDefault()
-        /* Reset our form values */
-        this.form.checked = []
-        this.form.reciever = []
-        this.form.sender_name = null
-        this.form.sender_mail = null
-        this.form.subject = ''
-        this.form.message = ''
-        /* Trick to reset/clear native browser form validation state */
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
-      },
-      addMe: function() {
-        this.form.reciever.push(this.reciever_selection)
-        this.reciever_selection = ''
-      }
+      sender_name: [{ text: 'Select One', value: null }, 'Max Musterman', 'ASP Aktionen'],
+      // TODO: get user name and role from Drops
+      sender_mail: [{ text: 'Select One', value: null }, 'noreply@vivaconagua.org', 'berlin@vivaconagua.org', 'maxmusterman@vivaconagua.org'],
+      // TODO: get user role from Drops and check access rights to mail adresses
+      show: true
+    }
+  },
+  methods: {
+    onSubmit(evt) {
+      evt.preventDefault()
+      alert(JSON.stringify(this.form))
+    },
+    onReset(evt) {
+      evt.preventDefault()
+      /* Reset our form values */
+      this.form.checked = []
+      this.form.reciever = []
+      this.form.sender_name = null
+      this.form.sender_mail = null
+      this.form.subject = ''
+      this.form.message = ''
+      /* Trick to reset/clear native browser form validation state */
+      this.show = false
+      this.$nextTick(() => {
+        this.show = true
+      })
+    },
+    addMe: function() {
+      this.form.reciever.push(this.reciever_selection)
+      this.reciever_selection = ''
     }
   }
+}
+
 </script>
