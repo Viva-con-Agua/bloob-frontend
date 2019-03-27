@@ -1,3 +1,5 @@
+docker stop bloob-frontend
+docker rm bloob-frontend
 set -ex
 
 # SET THE FOLLOWING VARIABLES
