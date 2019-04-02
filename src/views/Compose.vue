@@ -3,13 +3,17 @@
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
 
 <!-- TODO: import user search from Drops and save selected recievers -->
+    <WidgetUserAutocomplete
+      @vca-user-selection="selectSupporter"
+    />
+<!--
       <b-input-group prepend="Username" class="mt-3">
         <b-form-input v-model="reciever_selection"/>
         <b-input-group-append>
         <b-button v-on:click="addMe"> Empfänger hinzufügen</b-button>
         </b-input-group-append>
       </b-input-group>
-
+-->
       <div class="mt-2">Empfänger: {{ form.reciever }}</div>
         
       <b-form-group id="senderNameGroup" label="Senden als:" label-for="senderName">
@@ -57,15 +61,25 @@
 
 <script>
 
+//import { FormItem, Select, Option } from 'element-ui'
+import { WidgetUserAutocomplete } from 'vca-widget-user'
+import 'vca-widget-user/dist/vca-widget-user.css'
+//import { Mosaico } from 'mosaico'
+
 // @ is an alias to /src
 
 
 export default {
   name: "compose",
   components: {
+    WidgetUserAutocomplete,
+  //  FormItem,
+  //  Select,
+  //  Option
   },
   data() {
     return {
+      involvedSupporter: [],
       reciever_selection: '',
       form: {
         reciever: [],
@@ -105,6 +119,17 @@ export default {
     addMe: function() {
       this.form.reciever.push(this.reciever_selection)
       this.reciever_selection = ''
+    },
+    selectSupporter(supporter) {
+      this.involvedSupporter = supporter
+      alert(JSON.stringify(this.involvedSupporter))
+    },
+    setQuery: function(event) {
+      if(event.state === "success") {
+        this.query = event
+        this.getCount()
+        this.getPage()
+      }
     }
   }
 }

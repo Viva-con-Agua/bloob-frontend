@@ -2,20 +2,19 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/compose">Bloob</router-link>
+      <router-link to="/compose">Bloob</router-link> |
+      <router-link to="/about">Test Page</router-link>
     </div>
     <router-view />
   </div>
 </template>
 
 <script>
-    import { WidgetTopNavigation, WidgetBottomNavigation } from 'vca-widget-navigation'
-    export default {
-        name: 'App',
-        components: { WidgetTopNavigation, WidgetBottomNavigation }
-    }
+  export default {
+    name: 'App',
+    components: {}
+  }
 </script>
-
 
 <style>
 #app {
