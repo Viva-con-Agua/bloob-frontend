@@ -1,22 +1,34 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/compose">Bloob</router-link> |
-      <router-link to="/about">Test Page</router-link>
-    </div>
-    <router-view />
+    <WidgetTopNavigation />
+      <div id="nav">
+        <router-link to="/">Home</router-link> |
+        <router-link to="/compose">Bloob</router-link> |
+        <router-link to="/about">Test Page</router-link>
+      </div>
+      <div id="content">
+        <router-view/>
+      </div>
+    <WidgetBottomNavigation />
   </div>
 </template>
 
 <script>
+  import {WidgetTopNavigation, WidgetBottomNavigation} from "vca-widget-navigation";
+  //import 'element-ui/lib/theme-chalk/index.css';
+  import 'vca-widget-base/dist/vca-widget-base.css'
+
   export default {
     name: 'App',
-    components: {}
+    components: {
+      WidgetTopNavigation,
+      WidgetBottomNavigation
+    }
   }
 </script>
 
 <style>
+
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

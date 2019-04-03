@@ -67,6 +67,12 @@ Vue.use(BootstrapVue);
 new Vue({
   router,
   i18n,
+  show: true,
+  components: {
+    WidgetUserAutocomplete,
+    WidgetTopNavigation,
+    WidgetBottomNavigation
+  },
   store,
   render: h => h(App)
 }).$mount('#app')
