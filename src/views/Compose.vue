@@ -1,11 +1,21 @@
 <template>
   <div class="compose">
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+      <div class="mt-2">Empfänger: {{ form.reciever }}</div>
 
-<!-- TODO: import user search from Drops and save selected recievers -->
+<!-- TODO: import user search from Drops and save selected recievers 
+      -> WidgetUserAutocomplete can search in drops user data
+      -> Problem i need the right event to recieve a selected user
+        @vca-use-selection does not trigger, am i missing something?
+-->
     <WidgetUserAutocomplete
+      :placeholder="$t('donation.placeholder.involved.indicator')"
+      :preselection="involvedSupporter"
+      :SelectableUser="form.reciever"
+      @SelectableUser="callMe"
+      @selected="callMe"
+      @hasUser="callMe"
       @vca-user-selection="selectSupporter"
-    />
+/>
 <!--
       <b-input-group prepend="Username" class="mt-3">
         <b-form-input v-model="reciever_selection"/>
@@ -14,16 +24,20 @@
         </b-input-group-append>
       </b-input-group>
 -->
-      <div class="mt-2">Empfänger: {{ form.reciever }}</div>
-        
+      
+    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+
+      <!-- present sender name selection -->
       <b-form-group id="senderNameGroup" label="Senden als:" label-for="senderName">
         <b-form-select id="senderName" :options="sender_name" required v-model="form.sender_name" />
       </b-form-group>
 
+      <!-- present sender mail selection -->
       <b-form-group id="senderMailGroup" label="Senden von:" label-for="senderMail">
         <b-form-select id="senderMail" :options="sender_mail" required v-model="form.sender_mail" />
       </b-form-group>
 
+      <!-- subject line -->
       <b-form-group id="subjectLineGroup" label="Betreff:" label-for="subjectLine">
         <b-form-input
           id="subjectLine"
@@ -34,6 +48,7 @@
         />
       </b-form-group>
 
+      <!-- 2 example checkmarks -->
       <b-form-group id="exampleGroup4">
         <b-form-checkbox-group v-model="form.checked" id="exampleChecks">
           <b-form-checkbox value="me">Check me out</b-form-checkbox>
@@ -55,7 +70,10 @@
 -->
 <!-- using a simple WYSIWYG editor -->
       <wysiwyg v-model="form.message"/>
+
+      <!-- sample submit button, attached method outputs all data as an alert -->
       <b-button type="submit" variant="primary">Submit</b-button>
+      <!-- sample reset button, attacked method resets inputs -->
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
   </div>
@@ -100,10 +118,12 @@ export default {
     }
   },
   methods: {
+    // take all data in form, and output as alert
     onSubmit(evt) {
       evt.preventDefault()
       alert(JSON.stringify(this.form))
     },
+    //reset all data in form
     onReset(evt) {
       evt.preventDefault()
       /* Reset our form values */
@@ -119,20 +139,19 @@ export default {
         this.show = true
       })
     },
+    //take data from manual reciever input (no longer in use) and append it to the reciever list 
     addMe: function() {
       this.form.reciever.push(this.reciever_selection)
       this.reciever_selection = ''
     },
+    //handle user selection from WidgetUserAutocomplete @vca-user-selection
     selectSupporter(supporter) {
-      this.involvedSupporter = supporter
-      alert(JSON.stringify(this.involvedSupporter))
+      this.form.reciever = supporter
+      alert(JSON.stringify(supporter))
     },
-    setQuery: function(event) {
-      if(event.state === "success") {
-        this.query = event
-        this.getCount()
-        this.getPage()
-      }
+    // send an alert
+    callMe: function() {
+      alert("hello")
     }
   }
 }

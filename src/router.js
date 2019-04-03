@@ -2,7 +2,6 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Compose from "./views/Compose.vue";
-//import About from "./views/About";
 
 Vue.use(Router);
 
@@ -26,11 +25,6 @@ export default new Router({
       path: "/compose",
       name: "compose",
       component: Compose
-    }//,
-//    {
-//      path: "/about",
-//      name: "about",
-//      component: About
-//    }
+    }
   ]
 });

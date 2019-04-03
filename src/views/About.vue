@@ -1,7 +1,7 @@
 <template>
-  
+  <!-- a view for experimentation -->
     <VcAFrame title="About">
-      <VcAColumn>
+      <VcAColumn size="90%">
         <VcABox :first="true" :expand="true" title="WidgetUserList">
     <p>This is WidgetUserList</p>
     <WidgetUserList/>
@@ -13,13 +13,14 @@
       @vca-user-selection="selectSupporter"
     />
     </VcABox>
-    </VcAColumn>
+    
     <br>
     <br>
     <VcABox title="Editor">
     <p>Here be the editor</p>
     <wysiwyg v-model="myHTML"/>
     </VcABox>
+    </VcAColumn>
     </VcAFrame>
   
 </template>
@@ -40,9 +41,25 @@ export default {
     VcABox
     },
   data () {
+    var sources = []
+    var received = Date.now()
+    var involvedSupporter = []
+    if(typeof this.value !== "undefined" && this.value !== null) {
+      if(this.value.hasOwnProperty("sources")) {
+        sources = this.value.sources
+      }
+      if(this.value.hasOwnProperty("received")) {
+        received = this.value.received
+      }
+      if(this.value.hasOwnProperty("involvedSupporter")) {
+        involvedSupporter = this.value.involvedSupporter
+      }
+    }
     return { 
+      "involvedSupporter": involvedSupporter,
+      "received": received,
+      "sources": sources,
       myHTML:'',
-      involvedSupporter: [],
       options: {
         'type': { 'menue': true, 'value': 'table' },
         'sorting': { 'menue': { 'field': 'Supporter_firstName', 'dir': 'ASC' } },
@@ -50,6 +67,20 @@ export default {
       },
       
     }
+  },
+  created () {
+    if(typeof this.value !== "undefined" && this.value !== null) {
+      if(this.value.hasOwnProperty("received")) {
+        this.received = this.value.received
+      }
+      if(this.value.hasOwnProperty("sources")) {
+        this.sources = this.value.sources
+      }
+      if(this.value.hasOwnProperty("involvedSupporter")) {
+        this.involvedSupporter = this.value.involvedSupporter
+      }
+    }
+    this.commit()
   },
   methods: {
     selectSupporter(supporter) {
