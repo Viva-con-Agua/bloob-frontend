@@ -42,6 +42,7 @@
       </b-form-group>
 
 <!-- replace with WYSIWYG/Mosaico editor -->
+<!--
       <b-form-group id="messageEditor" label="Nachricht:" label-for="messageEditor"> 
         <b-form-textarea
           id="messageEditor"
@@ -51,6 +52,9 @@
           placeholder="Deine Nachricht" 
         />
       </b-form-group>
+-->
+<!-- using a simple WYSIWYG editor -->
+      <wysiwyg v-model="form.message"/>
 
       <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>

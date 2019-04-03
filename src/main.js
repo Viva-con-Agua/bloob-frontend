@@ -13,6 +13,11 @@ import store from './store'
 import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import wysiwyg from "vue-wysiwyg";
+import "vue-wysiwyg/dist/vueWysiwyg.css";
+
+Vue.use(wysiwyg, {}); // config is optional
+
 
 const dateTimeFormats = {
   'en-US': {
