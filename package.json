@@ -11,6 +11,7 @@
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.15",
     "console": "^0.7.2",
+    "iframe-resizer": "^4.1.0",
     "knockout-jqueryui": "^2.2.3",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",

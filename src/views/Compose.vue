@@ -6,17 +6,16 @@
       -> WidgetUserAutocomplete can search in drops user data
       -> Problem i need the right event to recieve a selected user
         @vca-use-selection does not trigger, am i missing something?
+      trying multiple fields and event names, searching for the right one
 -->
     <WidgetUserAutocomplete
       :placeholder="$t('donation.placeholder.involved.indicator')"
       :preselection="involvedSupporter"
       :SelectableUser="form.reciever"
-      @SelectableUser="callMe"
-      @selected="callMe"
-      @hasUser="callMe"
       @vca-user-selection="selectSupporter"
 />
-<!--
+<!-- manual reciever selection -->
+<!-- 
       <b-input-group prepend="Username" class="mt-3">
         <b-form-input v-model="reciever_selection"/>
         <b-input-group-append>

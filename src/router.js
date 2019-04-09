@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Compose from "./views/Compose.vue";
+import Mosaico from "./views/Mosaico.vue";
 
 Vue.use(Router);
 
@@ -25,6 +26,11 @@ export default new Router({
       path: "/compose",
       name: "compose",
       component: Compose
+    },
+    {
+      path: "/mosaico",
+      name: "mosaico",
+      component: Mosaico
     }
   ]
 });
