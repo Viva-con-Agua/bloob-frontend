@@ -19,14 +19,17 @@ export default {
 
   data () {
     return {
-      source: ''
+      source: '',
+      mailBody: ''
     }
   },
 
   methods: {
     iframeLoaded () {
+      //workaround for 'this' is undefined
+      var that = this;
       iFrameResize({
-        log: true,
+        log: false,
         heightCalculationMethod: 'taggedElement',
         // 'taggedElement' searches for the lowest Element with a certain tag to set iframe height
         // default, 'bodyScroll', 'documentElementOffset' 
@@ -37,10 +40,12 @@ export default {
         // 'lowestElement' adds a lot of dead space on index 
         //  and sizes very large on the editor, but no dead space
         enablePublicMethods: true, // Enable methods within iframe hosted page
-        messageCallback         : function(messageData){ // Callback fn when message is received
-					
-					alert(messageData.message);
-				},
+        
+        messageCallback: function(messageData){ // Callback fn when message is received
+            //alert(messageData.message);
+            //this is undefined in this context
+            that.mailBody=messageData.message;
+		},
       }, '#iframe')
     }
   }
