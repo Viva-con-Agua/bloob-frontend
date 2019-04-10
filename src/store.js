@@ -22,7 +22,7 @@ export default new Vuex.Store({
       state.sender_name = n;
     },
     sender_mail(state, n) {
-      state.sender_name = n;
+      state.sender_mail = n;
     },
     subject(state, n) {
       state.subject = n;

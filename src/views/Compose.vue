@@ -56,17 +56,7 @@
       </b-form-group>
 
 <!-- replace with WYSIWYG/Mosaico editor -->
-<!--
-      <b-form-group id="messageEditor" label="Nachricht:" label-for="messageEditor"> 
-        <b-form-textarea
-          id="messageEditor"
-          type="text"
-          v-model="form.message"
-          required
-          placeholder="Deine Nachricht" 
-        />
-      </b-form-group>
--->
+
 <!-- using a simple WYSIWYG editor -->
       <wysiwyg v-model="form.message"/>
 
@@ -121,6 +111,11 @@ export default {
     onSubmit(evt) {
       evt.preventDefault()
       alert(JSON.stringify(this.form))
+      // commit data to vuex store
+      this.$store.commit('subject', this.form.subject)
+      this.$store.commit('sender_mail', this.form.sender_mail)
+      this.$store.commit('sender_name', this.form.sender_name)
+      this.$store.commit('SetReciever', this.form.reciever)
     },
     //reset all data in form
     onReset(evt) {
@@ -147,12 +142,8 @@ export default {
     selectSupporter(supporter) {
       this.form.reciever = supporter
       alert(JSON.stringify(supporter))
-    },
-    // send an alert
-    callMe: function() {
-      alert("hello")
     }
-  }
+  },
 }
 
 </script>

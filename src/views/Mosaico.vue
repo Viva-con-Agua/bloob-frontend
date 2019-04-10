@@ -26,25 +26,28 @@ export default {
 
   methods: {
     iframeLoaded () {
-      //workaround for 'this' is undefined
+      //workaround for "'this' is undefined"
       var that = this;
       iFrameResize({
         log: false,
         heightCalculationMethod: 'taggedElement',
-        // 'taggedElement' searches for the lowest Element with a certain tag to set iframe height
+        // 'taggedElement' searches for the lowest Element with the 'data-iframe-height' tag to set iframe height
+        //
         // default, 'bodyScroll', 'documentElementOffset' 
         // work on index but have 0 height in editor
         //
         // 'max', 'documentElementScroll' only show top bar and flicker
         // 'grow' only stops iframe from shrinking
         // 'lowestElement' adds a lot of dead space on index 
-        //  and sizes very large on the editor, but no dead space
+        //  and is very large on the editor, but no dead space
         enablePublicMethods: true, // Enable methods within iframe hosted page
         
         messageCallback: function(messageData){ // Callback fn when message is received
             //alert(messageData.message);
             //this is undefined in this context
-            that.mailBody=messageData.message;
+            //that.mailBody=messageData.message;
+            //commit data to vuex store
+            that.$store.commit('message',messageData.message);
 		},
       }, '#iframe')
     }
