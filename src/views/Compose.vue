@@ -1,6 +1,6 @@
 <template>
   <div class="compose">
-      <div class="mt-2">Empfänger: {{ form.reciever }}</div>
+      <div class="mt-2">Empfänger: {{ form.receiver }}</div>
 
 <!-- TODO: import user search from Drops and save selected recievers 
       -> WidgetUserAutocomplete can search in drops user data
@@ -14,7 +14,7 @@
       :SelectableUser="form.reciever"
       @vca-user-selection="selectSupporter"
 />
-<!-- manual reciever selection -->
+<!-- manual receiver selection -->
 <!-- 
       <b-input-group prepend="Username" class="mt-3">
         <b-form-input v-model="reciever_selection"/>
@@ -28,12 +28,12 @@
 
       <!-- present sender name selection -->
       <b-form-group id="senderNameGroup" label="Senden als:" label-for="senderName">
-        <b-form-select id="senderName" :options="sender_name" required v-model="form.sender_name" />
+        <b-form-select id="senderName" :options="senderName" required v-model="form.senderName" />
       </b-form-group>
 
       <!-- present sender mail selection -->
       <b-form-group id="senderMailGroup" label="Senden von:" label-for="senderMail">
-        <b-form-select id="senderMail" :options="sender_mail" required v-model="form.sender_mail" />
+        <b-form-select id="senderMail" :options="senderMail" required v-model="form.senderMail" />
       </b-form-group>
 
       <!-- subject line -->
@@ -92,16 +92,16 @@ export default {
       involvedSupporter: [],
       reciever_selection: '',
       form: {
-        reciever: [],
-        sender_name: null,
-        sender_mail: null,
+        receiver: [],
+        senderName: null,
+        senderMail: null,
         subject: '',
         message: '',
         checked: []
       },
-      sender_name: [{ text: 'Select One', value: null }, 'Max Musterman', 'ASP Aktionen'],
+      senderName: [{ text: 'Select One', value: null }, 'Max Musterman', 'ASP Aktionen'],
       // TODO: get user name and role from Drops
-      sender_mail: [{ text: 'Select One', value: null }, 'noreply@vivaconagua.org', 'berlin@vivaconagua.org', 'maxmusterman@vivaconagua.org'],
+      senderMail: [{ text: 'Select One', value: null }, 'noreply@vivaconagua.org', 'berlin@vivaconagua.org', 'maxmusterman@vivaconagua.org'],
       // TODO: get user role from Drops and check access rights to mail adresses
       show: true
     }
@@ -112,18 +112,18 @@ export default {
       evt.preventDefault()
       alert(JSON.stringify(this.form))
       // commit data to vuex store
-      this.$store.commit('subject', this.form.subject)
-      this.$store.commit('sender_mail', this.form.sender_mail)
-      this.$store.commit('sender_name', this.form.sender_name)
-      this.$store.commit('SetReciever', this.form.reciever)
+      this.$store.commit('subject', this.form.subject);
+      this.$store.commit('sender_mail', this.form.senderMail);
+      this.$store.commit('senderName', this.form.senderName);
+      this.$store.commit('SetReciever', this.form.reciever);
     },
     //reset all data in form
     onReset(evt) {
       evt.preventDefault()
       /* Reset our form values */
       this.form.checked = []
-      this.form.reciever = []
-      this.form.sender_name = null
+      this.form.receiver = []
+      this.form.senderName = null
       this.form.sender_mail = null
       this.form.subject = ''
       this.form.message = ''
@@ -133,14 +133,14 @@ export default {
         this.show = true
       })
     },
-    //take data from manual reciever input (no longer in use) and append it to the reciever list 
+    //take data from manual receiver input (no longer in use) and append it to the receiver list
     addMe: function() {
       this.form.reciever.push(this.reciever_selection)
       this.reciever_selection = ''
     },
     //handle user selection from WidgetUserAutocomplete @vca-user-selection
     selectSupporter(supporter) {
-      this.form.reciever = supporter
+      this.form.receiver = supporter
       alert(JSON.stringify(supporter))
     }
   },
