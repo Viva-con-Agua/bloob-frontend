@@ -42,12 +42,12 @@ export default {
         //  and is very large on the editor, but no dead space
         enablePublicMethods: true, // Enable methods within iframe hosted page
         
-        messageCallback: function(messageData){ // Callback fn when message is received
-            //alert(messageData.message);
+        messageCallback: function(messageData){ // Callback fn when messageData is received
+            //alert(messageData.messageData);
             //this is undefined in this context
-            //that.mailBody=messageData.message;
+            //that.mailBody=messageData.messageData;
             //commit data to vuex store
-            that.$store.commit('message',messageData.message);
+            that.$store.commit('messageData',messageData.messageData);
 		},
       }, '#iframe')
     }

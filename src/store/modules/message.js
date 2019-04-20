@@ -1,3 +1,5 @@
+import { getField, updateField } from 'vuex-map-fields';
+
 const state = {
   to: [],
   subject: "",
@@ -7,7 +9,7 @@ const state = {
 }
 
 const getters = {
-
+  getField
 }
 
 const actions = {
@@ -15,6 +17,21 @@ const actions = {
 }
 
 const mutations = {
+  updateField,
+  updateMessage(state, messageData) {
+    state.to = messageData.to;
+    state.subject = messageData.subject;
+    state.senderName = messageData.senderName;
+    state.senderMail = messageData.senderMail;
+    state.body = messageData.body
+  },
+  clearMessage(state) {
+    state.to = [];
+    state.subject = "";
+    state.senderName = "";
+    state.senderMail = "";
+    state.body = "";
+  },
   addTo(state, n) {
     state.to.push(n);
   },

@@ -1,8 +1,8 @@
 <template>
     <div class="senderName">
         <p> Betreff: 
-        <input v-model="message" placeholder="...">
-        <!-- <p>Message is: {{ message }}</p> -->
+        <input v-model="messageData" placeholder="...">
+        <!-- <p>Message is: {{ messageData }}</p> -->
         </p>
     </div>
 </template>
