@@ -1,51 +1,34 @@
 import { getField, updateField } from 'vuex-map-fields';
 
-const state = {
-  to: [],
-  subject: "",
-  senderName: "", // Rename to don't know
-  senderMail: "", // Rename to Reply to?
-  body: ""
+const getDefaultState = () => {
+  return {
+    to: [],
+    subject: "",
+    senderName: "", // Rename property to don't know
+    senderMail: "", // Rename property to Reply to?
+    body: ""
+  }
 }
+
+const state = getDefaultState()
+
+const actions = {
+  resetMessageState ({ commit }) {
+    commit("resetState");
+  }
+};
 
 const getters = {
   getField
-}
-
-const actions = {
-
-}
+};
 
 const mutations = {
   updateField,
-  updateMessage(state, messageData) {
-    state.to = messageData.to;
-    state.subject = messageData.subject;
-    state.senderName = messageData.senderName;
-    state.senderMail = messageData.senderMail;
-    state.body = messageData.body
-  },
-  clearMessage(state) {
-    state.to = [];
-    state.subject = "";
-    state.senderName = "";
-    state.senderMail = "";
-    state.body = "";
-  },
-  addTo(state, n) {
-    state.to.push(n);
-  },
-  senderName(state, n) {
-    state.senderName = n;
-  },
-  senderMail(state, n) {
-    state.senderMail = n;
-  },
-  subject(state, n) {
-    state.subject = n;
-  },
-  body(state, n) {
-    state.body = n;
+  resetState(state) {
+    /*
+     * If you do not use assign, the object will loose observers and thus reactivity
+     */
+    Object.assign(state, getDefaultState());
   }
 }
 
