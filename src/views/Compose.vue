@@ -1,6 +1,6 @@
 <template>
   <div class="compose">
-      <div class="mt-2">Empfänger: {{ to }}</div>
+      <div class="mt-2">Empfänger: {{ involvedSupporter }}</div>
 
 <!-- TODO: import user search from Drops and save selected recievers
       -> WidgetUserAutocomplete can search in drops user data
@@ -11,18 +11,9 @@
     <WidgetUserAutocomplete
       :placeholder="$t('donation.placeholder.involved.indicator')"
       :preselection="involvedSupporter"
-      :SelectableUser="to"
-      @vca-user-selection="selectSupporter"
+      :SelectableUser="recipients"
+      @vca-user-selection="addRecipient"
 />
-<!-- manual receiver selection -->
-<!--
-      <b-input-group prepend="Username" class="mt-3">
-        <b-form-input v-model="receiverSelection"/>
-        <b-input-group-append>
-        <b-button v-on:click="addMe"> Empfänger hinzufügen</b-button>
-        </b-input-group-append>
-      </b-input-group>
--->
     <b-form @submit.prevent="onSubmit" @reset="resetMessageStateToDefault" v-if="show">
       <!-- present sender name selection -->
       <b-form-group id="sender-name-group" label="Senden als:" label-for="senderName">
@@ -71,12 +62,13 @@
 //import { FormItem, Select, Option } from 'element-ui'
 import { WidgetUserAutocomplete } from "vca-widget-user";
 import "vca-widget-user/dist/vca-widget-user.css";
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 import { createHelpers } from "vuex-map-fields";
 
-const { mapFields } = createHelpers({
-  getterType: "message/getField",
-  mutationType: "message/updateField"
+const storeModule = "message";
+const { mapFields, mapMultiRowFields } = createHelpers({
+  getterType: storeModule + "/getField",
+  mutationType: storeModule + "/updateField"
 });
 
 //import { Mosaico } from 'mosaico'
@@ -94,7 +86,6 @@ export default {
   data() {
     return {
       involvedSupporter: [],
-      receiverSelection: '',
       senderNameTestdata: [{ text: 'Select One', value: null }, 'Max Musterman', 'ASP Aktionen'],
       // TODO: get user name and role from Drops
       senderMailTestdata: [{ text: 'Select One', value: null }, 'noreply@vivaconagua.org', 'berlin@vivaconagua.org', 'maxmusterman@vivaconagua.org'],
@@ -104,31 +95,25 @@ export default {
   },
   computed: {
     ...mapFields({
-      to: "to",
       subject: "subject",
       senderName: "senderName",
       senderMail: "senderMail",
       messageBody: "body"
+    }),
+    ...mapMultiRowFields({
+      recipients : "recipients"
     })
   },
   methods: {
-    ...mapActions("message", {
+    ...mapActions(storeModule, {
       resetMessageStateToDefault: "resetMessageState"
     }),
-    // take all data in form, and output as alert
-    onSubmit(evt) {
+    ...mapMutations(storeModule, {
+      addRecipient: "addRecipient"
+    }),
+    onSubmit() {
       alert("Submitted.");
       this.resetMessageStateToDefault();
-    },
-    //take data from manual receiver input (no longer in use) and append it to the receiver list
-    addMe: function() {
-      this.to.push(this.receiverSelection)
-      this.receiverSelection = ''
-    },
-    //handle user selection from WidgetUserAutocomplete @vca-user-selection
-    selectSupporter(supporter) {
-      this.to = supporter
-      alert(JSON.stringify(supporter))
     }
   },
 }

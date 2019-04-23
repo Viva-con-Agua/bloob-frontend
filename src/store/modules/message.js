@@ -2,7 +2,7 @@ import { getField, updateField } from 'vuex-map-fields';
 
 const getDefaultState = () => {
   return {
-    to: [],
+    recipients: [],
     subject: "",
     senderName: "", // Rename property to don't know
     senderMail: "", // Rename property to Reply to?
@@ -24,6 +24,9 @@ const getters = {
 
 const mutations = {
   updateField,
+  addAddressRow(state) {
+    state.recipients.push("");
+  },
   resetState(state) {
     /*
      * If you do not use assign, the object will loose observers and thus reactivity
