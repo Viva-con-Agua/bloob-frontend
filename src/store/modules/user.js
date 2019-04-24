@@ -53,7 +53,7 @@ const actions = {
     // sets `state.loading` to true. Show a spinner or something.
     store.commit('API_USER_PENDING')
 
-    return axios.get('/backend/stream/identity')
+    return axios.get('/backend/bloob/identity')
       .then(response => {
         // sets `state.loading` to false
         // also sets `state.apiData to response`
