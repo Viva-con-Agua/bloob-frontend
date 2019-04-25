@@ -13,11 +13,17 @@
       :preselection="involvedSupporter"
       :SelectableUser="recipients"
       @vca-user-selection="addRecipient"
-/>
+    />
+
     <b-form @submit.prevent="onSubmit" @reset="resetMessageStateToDefault" v-if="show">
       <!-- present sender name selection -->
       <b-form-group id="sender-name-group" label="Senden als:" label-for="senderName">
-        <b-form-select id="sender-name" :options="senderNameTestdata" required v-model="senderName" />
+        <b-form-select id="sender-name" required v-model="senderName">
+          <option :value="null">Select one</option>
+          <option v-for="role in roles" :key="role.name" :value="role.name">
+            {{role.name}}
+          </option>
+        </b-form-select>
       </b-form-group>
 
       <!-- present sender mail selection -->
@@ -63,13 +69,10 @@
 import { WidgetUserAutocomplete } from "vca-widget-user";
 import "vca-widget-user/dist/vca-widget-user.css";
 import { mapActions, mapMutations } from "vuex";
-import { createHelpers } from "vuex-map-fields";
+import { mapFields, mapMultiRowFields } from "vuex-map-fields";
 
-const storeModule = "message";
-const { mapFields, mapMultiRowFields } = createHelpers({
-  getterType: storeModule + "/getField",
-  mutationType: storeModule + "/updateField"
-});
+const messageStore = "message";
+const userStore = "user";
 
 //import { Mosaico } from 'mosaico'
 
@@ -88,27 +91,30 @@ export default {
       involvedSupporter: [],
       senderNameTestdata: [{ text: 'Select One', value: null }, 'Max Musterman', 'ASP Aktionen'],
       // TODO: get user name and role from Drops
-      senderMailTestdata: [{ text: 'Select One', value: null }, 'noreply@vivaconagua.org', 'berlin@vivaconagua.org', 'maxmusterman@vivaconagua.org'],
+      // userRoles: [{ text: 'Select One', value: null }, 'noreply@vivaconagua.org', 'berlin@vivaconagua.org', 'maxmusterman@vivaconagua.org'],
       // TODO: get user role from Drops and check access rights to mail adresses
       show: true
     };
   },
   computed: {
-    ...mapFields({
+    ...mapFields(messageStore, {
       subject: "subject",
       senderName: "senderName",
       senderMail: "senderMail",
       messageBody: "body"
     }),
-    ...mapMultiRowFields({
+    ...mapFields(userStore, {
+      roles: "user.roles"
+    }),
+    ...mapMultiRowFields(messageStore, {
       recipients : "recipients"
     })
   },
   methods: {
-    ...mapActions(storeModule, {
+    ...mapActions(messageStore, {
       resetMessageStateToDefault: "resetMessageState"
     }),
-    ...mapMutations(storeModule, {
+    ...mapMutations(messageStore, {
       addRecipient: "addRecipient"
     }),
     onSubmit() {

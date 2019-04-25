@@ -1,12 +1,24 @@
 import axios from "axios";
+import { getField } from "vuex-map-fields";
 
+// const state = {
+//   user: null,
+//   pending: false,
+//   error: null
+// }
+
+// Test user state as a prove of concept for the vuex store getter
 const state = {
-  user: null,
+  user: {
+    uuid: "c3702bf6-9e98-4b7b-957e-261ea12c552c",
+    roles: [{ name: "supporter" }]
+  },
   pending: false,
   error: null
-}
+};
 
 const getters = {
+  getField,
   get: (state, getters) => {
     return state.user
   },
