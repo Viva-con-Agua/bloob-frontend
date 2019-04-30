@@ -6,7 +6,7 @@ const getDefaultState = () => {
     subject: "",
     senderName: null,
     senderMail: "", // Rename property to Reply to?
-    body: ""
+    messageData: null
   }
 }
 

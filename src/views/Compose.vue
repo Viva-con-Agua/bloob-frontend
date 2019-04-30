@@ -1,5 +1,8 @@
 <template>
   <div class="compose">
+    <router-view>
+      <!-- here the MosaicoModal component will be rendered -->
+    </router-view>
       <div class="mt-2">Empfänger: {{ involvedSupporter }}</div>
 
 <!-- TODO: import user search from Drops and save selected recievers
@@ -49,15 +52,8 @@
 <!--          <b-form-checkbox value="that">Check that out</b-form-checkbox>-->
 <!--        </b-form-checkbox-group>-->
 <!--      </b-form-group>-->
-
-      <!-- replace with WYSIWYG/Mosaico editor -->
-
-      <!-- using a simple WYSIWYG editor -->
-      <wysiwyg v-model="messageBody"></wysiwyg>
-
-      <!-- sample submit button, attached method outputs all data as an alert -->
+      <router-link :to="{name: 'mosaicoModal', params: {}}">Mosaico</router-link><br>
       <b-button type="submit" variant="primary">Submit</b-button>
-      <!-- sample reset button, attacked method resets inputs -->
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
   </div>
@@ -89,7 +85,7 @@ export default {
   data() {
     return {
       involvedSupporter: [],
-      senderNameTestdata: [{ text: 'Select One', value: null }, 'Max Musterman', 'ASP Aktionen'],
+      senderMailTestdata: [{ text: 'Select One', value: null }, 'noreply@vivaconagua.org', 'berlin@vivaconagua.org', 'maxmusterman@vivaconagua.org'],
       // TODO: get user name and role from Drops
       // userRoles: [{ text: 'Select One', value: null }, 'noreply@vivaconagua.org', 'berlin@vivaconagua.org', 'maxmusterman@vivaconagua.org'],
       // TODO: get user role from Drops and check access rights to mail adresses

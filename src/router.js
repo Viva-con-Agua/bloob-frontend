@@ -25,12 +25,14 @@ export default new Router({
     {
       path: "/compose",
       name: "compose",
-      component: Compose
-    },
-    {
-      path: "/mosaico",
-      name: "mosaico",
-      component: Mosaico
+      component: Compose,
+      children: [
+        {
+          path: "/mosaico",
+          name: "mosaicoModal",
+          component: Mosaico
+        }
+      ]
     }
   ]
 });
