@@ -18,7 +18,7 @@
       @vca-user-selection="addRecipient"
     />
 
-    <b-form @submit.prevent="onSubmit" @reset="resetMessageStateToDefault" v-if="show">
+    <b-form @submit.prevent="onSubmit" @reset="doResetMessageStateToDefault" v-if="show">
       <!-- present sender name selection -->
       <b-form-group id="sender-name-group" label="Senden als:" label-for="senderName">
         <b-form-select id="sender-name" required v-model="senderName">
@@ -66,17 +66,13 @@
 
 //import { FormItem, Select, Option } from 'element-ui'
 import { WidgetUserAutocomplete } from "vca-widget-user";
-import Mosaico from "../components/Mosaico.vue";
+import Mosaico from "@/components/Mosaico.vue"; // @ is an alias to /src
 import "vca-widget-user/dist/vca-widget-user.css";
 import { mapActions, mapMutations } from "vuex";
 import { mapFields, mapMultiRowFields } from "vuex-map-fields";
 
 const messageStore = "message";
 const userStore = "user";
-
-//import { Mosaico } from 'mosaico'
-
-// @ is an alias to /src
 
 export default {
   name: "compose",
@@ -112,14 +108,14 @@ export default {
   },
   methods: {
     ...mapActions(messageStore, {
-      resetMessageStateToDefault: "resetMessageState"
+      doResetMessageStateToDefault: "doResetMessageStateToDefault"
     }),
     ...mapMutations(messageStore, {
       addRecipient: "addRecipient"
     }),
     onSubmit() {
-      alert("Submitted.");
-      this.resetMessageStateToDefault();
+      alert("Submitted. Reset state to default.");
+      this.doResetMessageStateToDefault();
     }
   },
 }

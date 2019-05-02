@@ -13,13 +13,19 @@ const getDefaultState = () => {
 const state = getDefaultState()
 
 const actions = {
-  resetMessageState ({ commit }) {
-    commit("resetState");
+  doUpdateMessageData({ commit }, updatedMessageData) {
+    commit("updateMessageData", updatedMessageData);
+  },
+  doResetMessageStateToDefault({ commit }) {
+    commit("resetMessageStateToDefault");
   }
 };
 
 const getters = {
-  getField
+  getField,
+  getMessageBody(state) {
+    return state.messageBody;
+  }
 };
 
 const mutations = {
@@ -27,7 +33,10 @@ const mutations = {
   addRecipient(state) {
     state.recipients.push("");
   },
-  resetState(state) {
+  updateMessageBody(state, updatedMessageData) {
+    state.messageData = updatedMessageData;
+  },
+  resetMessageStateToDefault(state) {
     /*
      * If you do not use assign, the object will loose observers and thus reactivity
      */
