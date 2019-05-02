@@ -52,7 +52,10 @@
 <!--          <b-form-checkbox value="that">Check that out</b-form-checkbox>-->
 <!--        </b-form-checkbox-group>-->
 <!--      </b-form-group>-->
-      <router-link :to="{name: 'mosaicoModal', params: {}}">Mosaico</router-link><br>
+
+      <div id="mail-body">
+        <mosaico></mosaico>
+      </div>
       <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
@@ -63,6 +66,7 @@
 
 //import { FormItem, Select, Option } from 'element-ui'
 import { WidgetUserAutocomplete } from "vca-widget-user";
+import Mosaico from "../components/Mosaico.vue";
 import "vca-widget-user/dist/vca-widget-user.css";
 import { mapActions, mapMutations } from "vuex";
 import { mapFields, mapMultiRowFields } from "vuex-map-fields";
@@ -77,7 +81,8 @@ const userStore = "user";
 export default {
   name: "compose",
   components: {
-    WidgetUserAutocomplete
+    WidgetUserAutocomplete,
+    Mosaico
     //  FormItem,
     //  Select,
     //  Option
