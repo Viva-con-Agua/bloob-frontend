@@ -24,7 +24,7 @@ const getters = {
 
 const mutations = {
   updateField,
-  addAddressRow(state) {
+  addRecipient(state) {
     state.recipients.push("");
   },
   resetState(state) {

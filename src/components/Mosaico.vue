@@ -2,7 +2,7 @@
   <div>
     <iframe
       id="mosaico-iframe"
-      src="http://localhost:9006/index.html"
+      src="http://localhost:9006/editor.html"
       style="min-width: 100%; border: none;"
       scrolling="no"
       @load="iFrameLoaded"

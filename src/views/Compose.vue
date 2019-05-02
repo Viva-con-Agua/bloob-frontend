@@ -102,7 +102,6 @@ export default {
       subject: "subject",
       senderName: "senderName",
       senderMail: "senderMail",
-      messageBody: "body"
     }),
     ...mapFields(userStore, {
       roles: "user.roles"
