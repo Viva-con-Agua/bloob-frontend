@@ -23,8 +23,8 @@ const actions = {
 
 const getters = {
   getField,
-  getMessageBody(state) {
-    return state.messageBody;
+  getMessageData(state) {
+    return state.messageData;
   }
 };
 
@@ -33,16 +33,14 @@ const mutations = {
   addRecipient(state) {
     state.recipients.push("");
   },
-  updateMessageBody(state, updatedMessageData) {
+  updateMessageData(state, updatedMessageData) {
     state.messageData = updatedMessageData;
   },
   resetMessageStateToDefault(state) {
-    /*
-     * If you do not use assign, the object will loose observers and thus reactivity
-     */
+    // If you do not use assign, the object will loose observers and thus reactivity
     Object.assign(state, getDefaultState());
   }
-}
+};
 
 export default {
   namespaced: true,

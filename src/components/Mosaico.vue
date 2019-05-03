@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import iFrameResize from "iframe-resizer/js/iframeResizer";
-import { mapState, mapActions } from "vuex";
+import iFrameResizer from "iframe-resizer/js/iframeResizer";
+import { mapGetters, mapActions } from "vuex";
 
 const messageStore = "message";
 
@@ -22,39 +22,43 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(messageStore, {
-      mosaicoMessageData: "messageBody"
+    ...mapGetters(messageStore, {
+      getMessageData: "getMessageData"
     })
   },
   methods: {
     ...mapActions(messageStore, {
-      doUpdateMessageBody: "doUpdateMessageBody"
+      doUpdateMessageData: "doUpdateMessageData"
     }),
     iFrameLoaded() {
-      //workaround for "'this' is undefined"
-      var that = this;
-      iFrameResize(
+      var that = this; //workaround for "'this' is undefined"
+      iFrameResizer(
         {
           log: false,
           heightCalculationMethod: "taggedElement",
           onMessage: function(messageData) {
             if (!messageData.message) {
-              console.error("Message property missing in messageData object.");
               return;
             }
 
-            if (messageData.message.messageType != "MosaicoState") {
-              console.log("MessageType property missing in messageData.message object.");
+            if (messageData.message.messageType !== "MosaicoState") {
               return;
             }
 
-            var mosaicoState = messageData.message.messageBody;
-            that.doUpdateMessageBody(mosaicoState);
-            alert(mosaicoState.jsonData);
+            var mosaicoState = messageData.message.payload;
+            that.doUpdateMessageData(mosaicoState);
           }
         },
         "#mosaico-iframe"
       );
+
+      var mosaicoRequestInitMessage = {
+        message: {
+          messageType: "MosaicoRequestInit",
+          payload: this.getMessageData
+        }
+      };
+      document.getElementById('mosaico-iframe').iFrameResizer.sendMessage(mosaicoRequestInitMessage);
     }
   }
 };
