@@ -29,7 +29,7 @@
       <b-form-group
         id="sender-name-group"
         :label="$t('compose.form.label.fromName')"
-        label-for="senderName"
+        label-for="sender-name"
       >
         <b-form-select id="sender-name" required v-model="senderName">
           <option :value="null">{{
@@ -45,7 +45,7 @@
       <b-form-group
         id="sender-mail-group"
         :label="$t('compose.form.label.fromMail')"
-        label-for="senderMail"
+        label-for="sender-mail"
       >
         <b-form-select
           id="sender-mail"
@@ -91,8 +91,10 @@
       <div id="mail-body">
         <mosaico></mosaico>
       </div>
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
+      <b-button type="submit" variant="primary">{{
+        $t("compose.form.button.submit")
+      }}</b-button>
+      <b-button type="reset" variant="danger">{{ $t("compose.form.button.reset") }}</b-button>
     </b-form>
   </div>
 </template>
@@ -155,7 +157,6 @@ export default {
       addRecipient: "addRecipient"
     }),
     onSubmit() {
-      alert("Submitted. Reset state to default.");
       this.doResetMessageStateToDefault();
     }
   }
