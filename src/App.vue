@@ -7,6 +7,7 @@
         <router-link to="/">Home</router-link> |
         <router-link to="/compose">Bloob</router-link> |
         <router-link to="/about">Test Page</router-link> |
+        <router-link to="/mar">Mail AR</router-link>
       </div>
       <div id="content">
         <!-- this is where content from views is inserted -->
