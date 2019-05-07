@@ -69,8 +69,19 @@ export default {
     },
   methods: {
     onSubmit(evt) {
-        var request = '/backend/bloob/add/frontend/'+this.form.roleName+'/'+this.form.crewName+'/'+this.form.email
-        axios.get(request)
+        // eslint-disable-next-line
+        console.log("sending post to backend")
+        axios.post('/backend/bloob/create', {
+            "id": 1,"roleName": this.form.roleName, "crewName": this.form.crewName, "email": this.form.email
+        })
+        .then(function (response) {
+            // eslint-disable-next-line
+            console.log(response);
+        })
+        .catch(function (error) {
+            // eslint-disable-next-line
+            console.log(error);
+        });
         this.onReset(evt)
     },
     onReset(evt) {
