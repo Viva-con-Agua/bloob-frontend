@@ -1,4 +1,4 @@
-import { getField, updateField } from 'vuex-map-fields';
+import { getField, updateField } from "vuex-map-fields";
 
 const getDefaultState = () => {
   return {
@@ -7,10 +7,10 @@ const getDefaultState = () => {
     senderName: null,
     senderMail: null,
     messageData: null
-  }
-}
+  };
+};
 
-const state = getDefaultState()
+const state = getDefaultState();
 
 const actions = {
   doUpdateMessageData({ commit }, updatedMessageData) {
@@ -48,4 +48,4 @@ export default {
   getters,
   actions,
   mutations
-}
+};

@@ -47,11 +47,7 @@
         :label="$t('compose.form.label.fromMail')"
         label-for="sender-mail"
       >
-        <b-form-select
-          id="sender-mail"
-          required
-          v-model="senderMail"
-        >
+        <b-form-select id="sender-mail" required v-model="senderMail">
           <option :value="null">{{
             $t("compose.form.placeholder.fromMail")
           }}</option>
@@ -94,7 +90,9 @@
       <b-button type="submit" variant="primary">{{
         $t("compose.form.button.submit")
       }}</b-button>
-      <b-button type="reset" variant="danger">{{ $t("compose.form.button.reset") }}</b-button>
+      <b-button type="reset" variant="danger">{{
+        $t("compose.form.button.reset")
+      }}</b-button>
     </b-form>
   </div>
 </template>
