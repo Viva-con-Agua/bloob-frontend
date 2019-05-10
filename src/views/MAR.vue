@@ -43,6 +43,35 @@
                 <b-button type="reset" variant="danger">Reset</b-button>
             </b-form>
         </VcABox>
+        <VcABox :expand="true" title="All">
+            <b-button variant="primary" @click="getAll()">show AR</b-button>
+            <b-table 
+                responsive 
+                striped 
+                hover 
+                v-if="show" 
+                :fields="fields" 
+                :items="all"
+                :primary-key="all.id"
+                :sort-by.sync="sortBy"
+                :sort-desc.sync="sortDesc"
+            >
+            
+                <template slot="delete" slot-scope="row">
+                    <b-button size="sm" @click="deleteAR(row.item.id)" class="mr-2">
+                        Delete this row 
+                    </b-button>
+              </template>
+            
+            
+            </b-table>
+            <!--
+            <div>
+                Sorting By: <b>{{ sortBy }}</b>, Sort Direction:
+                <b>{{ sortDesc ? 'Descending' : 'Ascending' }}</b>
+            </div>
+            -->
+        </VcABox>
       </VcAColumn>
     </VcAFrame>
 </template>
@@ -64,6 +93,15 @@ export default {
                 crewName: '',
                 email: ''
             },
+            fields: [
+                { key: 'roleName', sortable: true },
+                { key: 'crewName', sortable: true },
+                { key: 'email', sortable: true },
+                'delete'
+            ],
+            sortBy: 'roleName',
+            sortDesc: false,
+            all:[],
             show: true
         }
     },
@@ -95,7 +133,52 @@ export default {
         this.$nextTick(() => {
             this.show = true
         })
-    }
+    },
+    getAll() {
+        var that=this
+        axios.get('/backend/bloob/all')
+        .then(function (response){
+            //put into a form
+            //that.all = response
+            // eslint-disable-next-line
+            console.log(response.data)
+            that.all=[]
+            for (var i = 0; i < response.data.length; i++)
+            {
+                // eslint-disable-next-line
+                console.log(response.data[i])
+                that.all[i] = response.data[i]
+            } //that.all = response.data
+            // eslint-disable-next-line
+            console.log(typeof that.all)
+            // eslint-disable-next-line
+            console.log(that.all)
+            /* Trick to reset/clear native browser form validation state */
+            this.show = false
+            this.$nextTick(() => {
+                this.show = true
+            })
+        })
+        .catch(function (error) {
+            // eslint-disable-next-line
+            console.log(error);
+        });
+    },
+    deleteAR(id) {
+        // eslint-disable-next-line
+        console.log("delete "+id)
+        var that = this;
+        axios.get('backend/bloob/delete/'+id)
+        .then(function(response){
+            // eslint-disable-next-line
+            console.log('deleted'+response)
+            that.getAll()
+        })
+        .catch(function (error) {
+            // eslint-disable-next-line
+            console.log(error);
+        });
+    },
   }
 }
 </script>
