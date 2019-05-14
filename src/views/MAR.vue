@@ -2,7 +2,6 @@
     <VcAFrame title="MAR">
       <VcAColumn size="90%">
         <VcABox :first="true" :expand="true" title="Add">
-            <!-- warum wird b-form nicht geladen? -->
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
                 <!-- roleName line -->
                 <b-form-group id="roleNameGroup" label="Role Name:" label-for="roleName">
@@ -21,7 +20,6 @@
                     id="crewName"
                     type="text"
                     v-model="form.crewName"
-                    required
                     placeholder="Der Name der Crew" 
                     />
                 </b-form-group>
@@ -39,7 +37,7 @@
 
                 <!-- submit button, attached method sends all data to the backend -->
                 <b-button type="submit" variant="primary">Submit</b-button>
-                <!-- reset button, attacked method resets inputs -->
+                <!-- reset button, attached method resets inputs -->
                 <b-button type="reset" variant="danger">Reset</b-button>
             </b-form>
         </VcABox>
@@ -56,21 +54,15 @@
                 :sort-by.sync="sortBy"
                 :sort-desc.sync="sortDesc"
             >
-            
                 <template slot="delete" slot-scope="row">
                     <b-button size="sm" @click="deleteAR(row.item.id)" class="mr-2">
                         Delete this row 
                     </b-button>
               </template>
-            
-            
             </b-table>
-            <!--
-            <div>
-                Sorting By: <b>{{ sortBy }}</b>, Sort Direction:
-                <b>{{ sortDesc ? 'Descending' : 'Ascending' }}</b>
-            </div>
-            -->
+        </VcABox>
+        <VcABox :expand="true" title="get by Role">
+            <b-button variant="primary" @click="getByRole()">get Mail by Role and Crew Example</b-button>
         </VcABox>
       </VcAColumn>
     </VcAFrame>
@@ -154,9 +146,9 @@ export default {
             // eslint-disable-next-line
             console.log(that.all)
             /* Trick to reset/clear native browser form validation state */
-            this.show = false
-            this.$nextTick(() => {
-                this.show = true
+            that.show = false
+            that.$nextTick(() => {
+                that.show = true
             })
         })
         .catch(function (error) {
@@ -168,7 +160,7 @@ export default {
         // eslint-disable-next-line
         console.log("delete "+id)
         var that = this;
-        axios.get('backend/bloob/delete/'+id)
+        axios.post('backend/bloob/delete',{id})
         .then(function(response){
             // eslint-disable-next-line
             console.log('deleted'+response)
@@ -179,6 +171,22 @@ export default {
             console.log(error);
         });
     },
+    getByRole() {
+        // eslint-disable-next-line
+        console.log("get mails for Roles: ASP, Hautpamt, Crews: Berlin ")
+        //example request
+        axios.post('backend/bloob/get', {
+            "roleName":["ASP","Hauptamt"],"crewName":"Berlin"
+        })
+        .then(function(response){
+            // eslint-disable-next-line
+            console.log('response from server: '+response)
+        })
+        .catch(function (error) {
+            // eslint-disable-next-line
+            console.log(error);
+        });
+    }
   }
 }
 </script>
