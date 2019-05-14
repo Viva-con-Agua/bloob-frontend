@@ -61,8 +61,13 @@
               </template>
             </b-table>
         </VcABox>
-        <VcABox :expand="true" title="get by Role">
-            <b-button variant="primary" @click="getByRole()">get Mail by Role and Crew Example</b-button>
+        <VcABox :expand="true" title="Example">
+            <p>get all available email addresses for the Roles:ASP and ASP Aktionen with the Crew Berlin</p>
+            <b-button variant="primary" @click="getByRole()">get Mail</b-button>
+            <!-- eslint-disable-next-line -->
+            <li v-for="item in getResponse">
+                {{ item }}
+            </li>
         </VcABox>
       </VcAColumn>
     </VcAFrame>
@@ -94,7 +99,8 @@ export default {
             sortBy: 'roleName',
             sortDesc: false,
             all:[],
-            show: true
+            show: true,
+            getResponse:[]
         }
     },
   methods: {
@@ -172,15 +178,17 @@ export default {
         });
     },
     getByRole() {
+        var that = this
         // eslint-disable-next-line
-        console.log("get mails for Roles: ASP, Hautpamt, Crews: Berlin ")
+        console.log("get mails for Roles: ASP, ASP Aktionen, Crews: Berlin ")
         //example request
         axios.post('backend/bloob/get', {
-            "roleName":["ASP","Hauptamt"],"crewName":"Berlin"
+            "roleName":["ASP","ASP Aktionen"],"crewName":"Berlin"
         })
         .then(function(response){
             // eslint-disable-next-line
-            console.log('response from server: '+response)
+            console.log('response from server: '+response.data)
+            that.getResponse = response.data
         })
         .catch(function (error) {
             // eslint-disable-next-line
