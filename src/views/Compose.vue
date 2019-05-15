@@ -70,6 +70,7 @@ import Mosaico from "@/components/Mosaico.vue"; // @ is an alias to /src
 import "vca-widget-user/dist/vca-widget-user.css";
 import { mapActions, mapMutations } from "vuex";
 import { mapFields, mapMultiRowFields } from "vuex-map-fields";
+import axios from "axios";
 
 const messageStore = "message";
 const userStore = "user";
@@ -86,11 +87,12 @@ export default {
   data() {
     return {
       involvedSupporter: [],
-      senderMailTestdata: [{ text: 'Select One', value: null }, 'noreply@vivaconagua.org', 'berlin@vivaconagua.org', 'maxmusterman@vivaconagua.org'],
+      senderMailTestdata: [{ text: 'Select One', value: null },this.availableEmails],
       // TODO: get user name and role from Drops
       // userRoles: [{ text: 'Select One', value: null }, 'noreply@vivaconagua.org', 'berlin@vivaconagua.org', 'maxmusterman@vivaconagua.org'],
       // TODO: get user role from Drops and check access rights to mail adresses
-      show: true
+      show: true,
+      availableEmails:[]
     };
   },
   computed: {
@@ -116,8 +118,33 @@ export default {
     onSubmit() {
       alert("Submitted. Reset state to default.");
       this.doResetMessageStateToDefault();
+    },
+    getAvailablEmails() { 
+      var requestRoles = []
+      var requestCrew = ""
+      var that = this
+        for (var i = 0; i < this.roles.length;i++){
+        requestRoles.push(this.roles[i].name)
+      }
+      // eslint-disable-next-line
+      console.log("requesting mails for: Roles="+requestRoles+" and Crew="+requestCrew+".")
+      axios.post('backend/bloob/get', {
+        "roleName":requestRoles,"crewName":requestCrew
+      })
+      .then(function(response){
+        // eslint-disable-next-line
+        console.log('response from server: '+response.data)
+        that.availableEmails = response.data
+      })
+      .catch(function (error) {
+        // eslint-disable-next-line
+        console.log(error);
+      });
     }
   },
+  beforeMount(){
+    this.getAvailablEmails()
+  }
 }
 
 </script>
