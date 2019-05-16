@@ -1,48 +1,60 @@
 <template>
-    <VcAFrame title="MAR">
+    <VcAFrame title="MARS">
       <VcAColumn size="90%">
-        <VcABox :first="true" :expand="true" title="Add">
+        <VcABox :first="true" :expand="true" :title="$t('mars.form.category.add')">
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
                 <!-- roleName line -->
-                <b-form-group id="roleNameGroup" label="Role Name:" label-for="roleName">
+                <b-form-group 
+                    id="roleNameGroup" 
+                    :label="$t('mars.form.label.roleName')" 
+                    label-for="roleName"
+                >
                     <b-form-input
                     id="roleName"
                     type="text"
                     v-model="form.roleName"
                     required
-                    placeholder="Der Name der Rolle" 
+                    :placeholder="$t('mars.form.placeholder.roleName')"
                     />
                 </b-form-group>
 
                 <!-- crewName line -->
-                <b-form-group id="crewNameGroup" label="Crew Name:" label-for="crewName">
+                <b-form-group 
+                    id="crewNameGroup" 
+                    :label="$t('mars.form.label.crewName')" 
+                    label-for="crewName"
+                >
                     <b-form-input
                     id="crewName"
                     type="text"
                     v-model="form.crewName"
-                    placeholder="Der Name der Crew" 
+                    :placeholder="$t('mars.form.placeholder.crewName')"
                     />
                 </b-form-group>
 
                 <!-- Email line -->
-                <b-form-group id="emailGroup" label="Email:" label-for="email">
+                <b-form-group 
+                    id="emailGroup" 
+                    :label="$t('mars.form.label.email')"
+                    label-for="email"
+                >
                     <b-form-input
                     id="email"
                     type="email"
                     v-model="form.email"
                     required
-                    placeholder="Die Email" 
+                    :placeholder="$t('mars.form.label.email')" 
                     />
                 </b-form-group>
 
                 <!-- submit button, attached method sends all data to the backend -->
-                <b-button type="submit" variant="primary">Submit</b-button>
+                <b-button type="submit" variant="primary">{{$t("mars.form.button.submit")}}</b-button>
                 <!-- reset button, attached method resets inputs -->
-                <b-button type="reset" variant="danger">Reset</b-button>
+                <b-button type="reset" variant="danger">{{$t("mars.form.button.reset")}}</b-button>
             </b-form>
         </VcABox>
-        <VcABox :expand="true" title="All">
-            <b-button variant="primary" @click="getAll()">show AR</b-button>
+        <VcABox :expand="true" :title="$t('mars.form.category.all')">
+            <b-button variant="primary" @click="getAll()">{{$t('mars.form.button.show')}}</b-button>
             <b-table 
                 responsive 
                 striped 
@@ -54,9 +66,9 @@
                 :sort-by.sync="sortBy"
                 :sort-desc.sync="sortDesc"
             >
-                <template slot="delete" slot-scope="row">
+                <template :slot="$t('mars.form.label.delete')" slot-scope="row">
                     <b-button size="sm" @click="deleteAR(row.item.id)" class="mr-2">
-                        Delete this row 
+                        {{$t('mars.form.label.delete')}}
                     </b-button>
               </template>
             </b-table>
@@ -91,12 +103,12 @@ export default {
                 email: ''
             },
             fields: [
-                { key: 'roleName', sortable: true },
-                { key: 'crewName', sortable: true },
-                { key: 'email', sortable: true },
-                'delete'
+                { key: "roleName", label: this.$i18n.t('mars.form.label.roleName'), sortable: true },
+                { key: "crewName", label: this.$i18n.t('mars.form.label.crewName'), sortable: true },
+                { key: "email", label: this.$i18n.t('mars.form.label.email'), sortable: true },
+                this.$i18n.t('mars.form.label.delete')
             ],
-            sortBy: 'roleName',
+            sortBy: this.$i18n.t('mars.form.label.crewName'),
             sortDesc: false,
             all:[],
             show: true,

@@ -72,7 +72,7 @@
           type="text"
           v-model="subject"
           required
-          placeholder="Der Betreff deiner Email"
+          :placeholder="$t('compose.form.placeholder.subject')"
         />
       </b-form-group>
 

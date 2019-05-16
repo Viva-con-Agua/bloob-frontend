@@ -22,6 +22,30 @@
       }
     }
   },
+  "mars":{
+    "form":{
+      "label":{
+        "roleName": "Rollen Name",
+        "crewName": "Crew Name",
+        "email": "Email Adresse",
+        "delete": "Löschen"
+      },
+      "placeholder":{
+        "roleName": "Die Rollen Bezeichnung",
+        "crewName": "Der Name der Crew",
+        "email": "Die Email Adresse"
+      },
+      "button": {
+        "submit": "Absenden",
+        "reset": "Zurücksetzen",
+        "show": "Zeige Zugrffsrechte"
+      },
+      "category":{
+        "add": "Neue Email Zugriffsrechte hinzufügen",
+        "all": "Email Zugriffsrechte einsehen"
+      }
+    }
+  },
   "errors": {
     "ajax": {
       "badRequest": {
