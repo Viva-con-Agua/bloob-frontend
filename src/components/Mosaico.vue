@@ -58,7 +58,9 @@ export default {
           payload: this.getMessageData
         }
       };
-      document.getElementById('mosaico-iframe').iFrameResizer.sendMessage(mosaicoRequestInitMessage);
+      document
+        .getElementById("mosaico-iframe")
+        .iFrameResizer.sendMessage(mosaicoRequestInitMessage);
     }
   }
 };

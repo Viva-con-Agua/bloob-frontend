@@ -2,6 +2,26 @@
   "defaults": {
     "support": "it@vivaconagua.org"
   },
+  "compose": {
+    "form": {
+      "label": {
+        "recipients": "Empfänger:",
+        "fromName": "Senden als:",
+        "fromMail": "Senden von:",
+        "subject": "Betreff:"
+      },
+      "placeholder": {
+        "recipients": "Die Empfänger deiner Mail",
+        "fromName": "Der Name, von dem gesendet wird",
+        "fromMail": "Die Mailadresse, von der gesendet wird",
+        "subject": "Der Betreff deiner Mail"
+      },
+      "button": {
+        "submit": "Absenden",
+        "reset": "Formular zurücksetzen"
+      }
+    }
+  },
   "errors": {
     "ajax": {
       "badRequest": {

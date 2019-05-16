@@ -10,12 +10,12 @@
         <:expand="true"> that does ???
       -->
       <VcABox :first="true" title="Logo">
-        <img alt="Vue logo" src="../assets/logo.png">
+        <img alt="Vue logo" src="../assets/logo.png" />
       </VcABox>
     </VcAColumn>
     <VcAColumn>
       <VcABox :first="true" title="Welcome">
-        <HelloWorld msg="Welcome to Your Vue.js App"/>
+        <HelloWorld msg="Welcome to Your Vue.js App" />
       </VcABox>
     </VcAColumn>
   </VcAFrame>
@@ -23,15 +23,18 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import { VcAFrame, VcAColumn, VcABox } from 'vca-widget-base'
-import 'vca-widget-base/dist/vca-widget-base.css'
+import HelloWorld from "@/components/HelloWorld.vue";
+import { VcAFrame, VcAColumn, VcABox } from "vca-widget-base";
+import "vca-widget-base/dist/vca-widget-base.css";
 
 export default {
-  name: 'home',
+  name: "home",
   // all importet components have to be registered
   components: {
-    HelloWorld, VcAFrame, VcAColumn, VcABox
+    HelloWorld,
+    VcAFrame,
+    VcAColumn,
+    VcABox
   }
-}
+};
 </script>

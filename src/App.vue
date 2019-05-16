@@ -1,5 +1,5 @@
 <template>
-<!-- everything in this template is loaded on all pages and dosn't need to be included in views -->
+  <!-- everything in this template is loaded on all pages and dosn't need to be included in views -->
   <div id="app">
     <!-- The top navigation of Pool Pages -->
     <WidgetTopNavigation />
@@ -19,19 +19,22 @@
 </template>
 
 <script>
-  // Curly brackets are needed to import multiple components and non default components
-  import {WidgetTopNavigation, WidgetBottomNavigation} from "vca-widget-navigation";
-  //import 'element-ui/lib/theme-chalk/index.css';
-  import 'vca-widget-base/dist/vca-widget-base.css'
+// Curly brackets are needed to import multiple components and non default components
+import {
+  WidgetTopNavigation,
+  WidgetBottomNavigation
+} from "vca-widget-navigation";
+//import 'element-ui/lib/theme-chalk/index.css';
+import "vca-widget-base/dist/vca-widget-base.css";
 
-  export default {
-    name: 'App',
-    //components registered here are available in all views
-    components: {
-      WidgetTopNavigation,
-      WidgetBottomNavigation
-    }
+export default {
+  name: "App",
+  //components registered here are available in all views
+  components: {
+    WidgetTopNavigation,
+    WidgetBottomNavigation
   }
+};
 </script>
 
 <style>
