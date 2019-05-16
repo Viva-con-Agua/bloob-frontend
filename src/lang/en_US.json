@@ -28,12 +28,14 @@
         "roleName": "Role name",
         "crewName": "Crew name",
         "email": "Email address",
-        "delete": "Delete"
+        "delete": "Delete",
+        "pillar": "Pillar"
       },
       "placeholder":{
         "roleName": "The name of the role",
         "crewName": "The name of the crew",
-        "email": "The email address"
+        "email": "The email address",
+        "pillar": "No pillar"
       },
       "button": {
         "submit": "Submit",
@@ -44,6 +46,18 @@
         "add": "Add email access rights",
         "all": "Existing email access rights"
       }
+    }
+  },
+  "role":{
+    "supporter": "Supporter",
+    "employee": "Employee",
+    "admin": "Administrator",
+    "volunteer manager": "Volunteer Manager",
+    "pillar":{
+      "education": "Education",
+      "network": "Network",
+      "finance": "Finance",
+      "operation": "Operation"
     }
   },
   "errors": {

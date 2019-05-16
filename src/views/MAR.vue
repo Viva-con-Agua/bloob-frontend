@@ -9,13 +9,52 @@
                     :label="$t('mars.form.label.roleName')" 
                     label-for="roleName"
                 >
-                    <b-form-input
-                    id="roleName"
-                    type="text"
+                    <b-form-select 
+                    id="roleName" 
+                    required 
                     v-model="form.roleName"
-                    required
-                    :placeholder="$t('mars.form.placeholder.roleName')"
-                    />
+                    >
+                        <!-- Bug: placeholder option is not shown on page load -->
+                        <option 
+                        :value="null" 
+                        disabled
+                        >
+                            {{$t("mars.form.placeholder.roleName")}}
+                        </option>
+                        <option 
+                        v-for="role in roles" 
+                        :key="role" 
+                        :value="role"
+                        >
+                            {{$t("role."+role)}}
+                        </option>
+                    </b-form-select>
+                </b-form-group>
+
+                <!-- pillar line -->
+                <b-form-group 
+                    id="pillarGroup" 
+                    :label="$t('mars.form.label.pillar')" 
+                    label-for="pillar"
+                    v-if='(form.roleName == "volunteer manager")'
+                >
+                    <b-form-select 
+                    id="pillar" 
+                    v-model="form.pillar"
+                    >
+                        <option 
+                        value=""
+                        >
+                            {{$t("mars.form.placeholder.pillar")}}
+                        </option>
+                        <option 
+                        v-for="pillar in pillars" 
+                        :key="pillar" 
+                        :value="pillar"
+                        >
+                            {{$t("role.pillar."+pillar)}}
+                        </option>
+                    </b-form-select>
                 </b-form-group>
 
                 <!-- crewName line -->
@@ -99,6 +138,7 @@ export default {
         return {
             form: {
                 roleName: '',
+                pillar:'',
                 crewName: '',
                 email: ''
             },
@@ -112,7 +152,9 @@ export default {
             sortDesc: false,
             all:[],
             show: true,
-            getResponse:[]
+            getResponse:[],
+            roles:["supporter","employee","admin","volunteer manager"],
+            pillars:["education","network","finance","operation"]
         }
     },
   methods: {
@@ -120,7 +162,7 @@ export default {
         // eslint-disable-next-line
         console.log("sending post to backend")
         axios.post('/backend/bloob/create', {
-            "id": 1,"roleName": this.form.roleName, "crewName": this.form.crewName, "email": this.form.email
+            "id": 1,"roleName": this.form.roleName,"pillar": (this.form.roleName == "volunteer manager") ? this.form.pillar : "", "crewName": this.form.crewName, "email": this.form.email
         })
         .then(function (response) {
             // eslint-disable-next-line

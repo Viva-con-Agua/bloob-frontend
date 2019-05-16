@@ -32,7 +32,7 @@
         label-for="sender-name"
       >
         <b-form-select id="sender-name" required v-model="senderName">
-          <option :value="null">{{
+          <option :value="null" disabled>{{
             $t("compose.form.placeholder.fromName")
           }}</option>
           <option v-for="role in roles" :key="role.name" :value="role.name">
@@ -48,7 +48,7 @@
         label-for="sender-mail"
       >
         <b-form-select id="sender-mail" required v-model="senderMail">
-          <option :value="null">{{
+          <option :value="null" disabled>{{
             $t("compose.form.placeholder.fromMail")
           }}</option>
           <option
