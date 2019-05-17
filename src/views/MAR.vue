@@ -104,7 +104,22 @@
                 :primary-key="all.id"
                 :sort-by.sync="sortBy"
                 :sort-desc.sync="sortDesc"
-            >
+            >   <!--
+                <template slot="roleName" slot-scope="row" >
+                    <div v-if='(row.item.pillar == "")'>
+                    {{$t("role."+row.item.roleName)}}
+                    </div>
+                    <div v-else >
+                    {{$t("role."+row.item.roleName)}} - {{$t("role.pillar."+row.item.pillar)}}
+                    </div>
+                </template>
+                -->
+                <template slot="roleName" slot-scope="row" >
+                     {{$t("role."+row.item.roleName)}}
+                </template>
+                <template slot="pillar" slot-scope="row" v-if='(row.item.pillar != "")'>
+                     {{$t("role.pillar."+row.item.pillar)}}
+                </template>
                 <template :slot="$t('mars.form.label.delete')" slot-scope="row">
                     <b-button size="sm" @click="deleteAR(row.item.id)" class="mr-2">
                         {{$t('mars.form.label.delete')}}
@@ -113,7 +128,7 @@
             </b-table>
         </VcABox>
         <VcABox :expand="true" title="Example">
-            <p>get all available email addresses for the Roles:ASP and ASP Aktionen with the Crew Berlin</p>
+            <p>get mails for Roles: employee, volunteer manager, Bereich: Bildung Crews: Berlin</p>
             <b-button variant="primary" @click="getByRole()">get Mail</b-button>
             <!-- eslint-disable-next-line -->
             <li v-for="item in getResponse">
@@ -144,11 +159,12 @@ export default {
             },
             fields: [
                 { key: "roleName", label: this.$i18n.t('mars.form.label.roleName'), sortable: true },
+                { key: "pillar", label: this.$i18n.t('mars.form.label.pillar'), sortable: true },
                 { key: "crewName", label: this.$i18n.t('mars.form.label.crewName'), sortable: true },
                 { key: "email", label: this.$i18n.t('mars.form.label.email'), sortable: true },
                 this.$i18n.t('mars.form.label.delete')
             ],
-            sortBy: this.$i18n.t('mars.form.label.crewName'),
+            sortBy: 'roleName',
             sortDesc: false,
             all:[],
             show: true,
@@ -234,10 +250,10 @@ export default {
     getByRole() {
         var that = this
         // eslint-disable-next-line
-        console.log("get mails for Roles: ASP, ASP Aktionen, Crews: Berlin ")
+        console.log("get mails for Roles: employee, volunteer manager, Bereich: Bildung Crews: Berlin ")
         //example request
         axios.post('backend/bloob/get', {
-            "roleName":["ASP","ASP Aktionen"],"crewName":"Berlin"
+            "roleName":["employee","volunteer manager"],"pillar":"education","crewName":"Berlin"
         })
         .then(function(response){
             // eslint-disable-next-line
