@@ -8,7 +8,8 @@ const getDefaultState = () => {
       pillar: "",
       crewName: "",
       email: ""
-    }
+    },
+    allAccessRights: []
   };
 };
 
@@ -38,6 +39,21 @@ const actions = {
         // eslint-disable-next-line
           console.log(error);
       });
+  },
+  doGetAllAccessRights({ commit }) {
+    axios
+      .get("/backend/bloob/all")
+      .then(function(response) {
+        for (var i = 0; i < response.data.length; i++) {
+          commit("addMailAccessRight", {
+            mailAccessRight: response.data[i]
+          });
+        }
+      })
+      .catch(function(error) {
+        // eslint-disable-next-line
+          console.log(error);
+      });
   }
 };
 
@@ -53,6 +69,9 @@ const mutations = {
   resetMailAccessRightsFormToDefault(state) {
     // If you do not use assign, the object will loose observers and thus reactivity
     Object.assign(state, getDefaultState());
+  },
+  addMailAccessRight(state, mailAccessRight) {
+    state.allAccessRights.push(mailAccessRight.mailAccessRight);
   }
 };
 

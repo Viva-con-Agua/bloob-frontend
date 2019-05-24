@@ -90,8 +90,8 @@
           hover
           v-if="show"
           :fields="fields"
-          :items="all"
-          :primary-key="all.id"
+          :items="allStore"
+          :primary-key="allStore.id"
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
         >
@@ -137,7 +137,7 @@
 import axios from "axios";
 import { VcAFrame, VcAColumn, VcABox } from "vca-widget-base";
 import { mapActions } from "vuex";
-import { mapFields } from "vuex-map-fields";
+import { mapFields, mapMultiRowFields } from "vuex-map-fields";
 
 const mailAccessRightsStore = "mailAccessRights";
 
@@ -188,6 +188,9 @@ export default {
       formPillar: "form.pillar",
       formCrewName: "form.crewName",
       formEmail: "form.email"
+    }),
+    ...mapMultiRowFields(mailAccessRightsStore, {
+      allStore: "allAccessRights"
     })
   },
   methods: {
@@ -197,6 +200,12 @@ export default {
     ...mapActions(mailAccessRightsStore, {
       submitForm: "doSubmitToBackend"
     }),
+    ...mapActions(mailAccessRightsStore, {
+      getAllAccessRights: "doGetAllAccessRights"
+    }),/*
+    ...mapMutations(mailAccessRightsStore, {
+      addMailAccessRight: "addMailAccessRight"
+    }),*/
     resetValidation() {
       /* Trick to reset/clear native browser form validation state */
       this.show = false;
@@ -216,34 +225,9 @@ export default {
       this.resetValidation();
     },
     getAll() {
-      var that = this;
-      axios
-        .get("/backend/bloob/all")
-        .then(function(response) {
-          //put into a form
-          //that.all = response
-          // eslint-disable-next-line
-            console.log(response.data)
-          that.all = [];
-          for (var i = 0; i < response.data.length; i++) {
-            // eslint-disable-next-line
-                console.log(response.data[i])
-            that.all[i] = response.data[i];
-          } //that.all = response.data
-          // eslint-disable-next-line
-            console.log(typeof that.all)
-          // eslint-disable-next-line
-            console.log(that.all)
-          /* Trick to reset/clear native browser form validation state */
-          that.show = false;
-          that.$nextTick(() => {
-            that.show = true;
-          });
-        })
-        .catch(function(error) {
-          // eslint-disable-next-line
-            console.log(error);
-        });
+      this.resetForm();
+      this.getAllAccessRights();
+      this.resetValidation();
     },
     deleteAR(id) {
       // eslint-disable-next-line
