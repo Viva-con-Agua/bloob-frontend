@@ -29,7 +29,7 @@
             id="pillarGroup"
             :label="$t('mars.form.label.pillar')"
             label-for="pillar"
-            v-if="form.roleName == 'volunteer manager'"
+            v-if="formRoleName == 'volunteer manager'"
           >
             <b-form-select id="pillar" v-model="formPillar">
               <option value="">
@@ -64,7 +64,7 @@
             <b-form-input
               id="email"
               type="email"
-              v-model="form.email"
+              v-model="formEmail"
               required
               :placeholder="$t('mars.form.label.email')"
             />
@@ -136,6 +136,7 @@
 <script>
 import axios from "axios";
 import { VcAFrame, VcAColumn, VcABox } from "vca-widget-base";
+import { mapActions } from "vuex";
 import { mapFields } from "vuex-map-fields";
 
 const mailAccessRightsStore = "mailAccessRights";
@@ -149,12 +150,6 @@ export default {
   },
   data() {
     return {
-      form: {
-        roleName: "",
-        pillar: "",
-        crewName: "",
-        email: ""
-      },
       roles: ["supporter", "employee", "admin", "volunteer manager"],
       pillars: ["education", "network", "finance", "operation"],
       fields: [
@@ -191,43 +186,34 @@ export default {
     ...mapFields(mailAccessRightsStore, {
       formRoleName: "form.roleName",
       formPillar: "form.pillar",
-      formCrewName: "form.crewName"
+      formCrewName: "form.crewName",
+      formEmail: "form.email"
     })
   },
   methods: {
-    onSubmit(evt) {
-      // eslint-disable-next-line
-        console.log("sending post to backend")
-      axios
-        .post("/backend/bloob/create", {
-          id: 1,
-          roleName: this.form.roleName,
-          pillar:
-            this.form.roleName == "volunteer manager" ? this.form.pillar : "",
-          crewName: this.form.crewName,
-          email: this.form.email
-        })
-        .then(function(response) {
-          // eslint-disable-next-line
-            console.log(response);
-        })
-        .catch(function(error) {
-          // eslint-disable-next-line
-            console.log(error);
-        });
-      this.onReset(evt);
-    },
-    onReset(evt) {
-      evt.preventDefault();
-      /* Reset our form values */
-      (this.form.roleName = ""),
-        (this.form.crewName = ""),
-        (this.form.email = "");
+    ...mapActions(mailAccessRightsStore, {
+      resetForm: "doResetMailAccessRightsFormToDefault"
+    }),
+    ...mapActions(mailAccessRightsStore, {
+      submitForm: "doSubmitToBackend"
+    }),
+    resetValidation() {
       /* Trick to reset/clear native browser form validation state */
       this.show = false;
       this.$nextTick(() => {
         this.show = true;
       });
+    },
+    onSubmit() {
+      this.submitForm();
+      this.resetForm();
+      this.resetValidation();
+    },
+    onReset(evt) {
+      evt.preventDefault();
+      /* Reset our form values */
+      this.resetForm();
+      this.resetValidation();
     },
     getAll() {
       var that = this;
