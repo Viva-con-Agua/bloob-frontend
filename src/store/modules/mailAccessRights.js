@@ -54,6 +54,22 @@ const actions = {
         // eslint-disable-next-line
           console.log(error);
       });
+  },
+  // without the unused commit the id parameter is not passed properly
+  // eslint-disable-next-line no-unused-vars
+  doDeleteAccessRight({ commit }, id) {
+    // eslint-disable-next-line
+      console.log("delete "+id);
+    axios
+      .post("backend/bloob/delete", { id })
+      .then(function(response) {
+        // eslint-disable-next-line
+          console.log('deleted'+response);
+      })
+      .catch(function(error) {
+        // eslint-disable-next-line
+          console.log(error);
+      });
   }
 };
 

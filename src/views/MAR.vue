@@ -202,10 +202,10 @@ export default {
     }),
     ...mapActions(mailAccessRightsStore, {
       getAllAccessRights: "doGetAllAccessRights"
-    }),/*
-    ...mapMutations(mailAccessRightsStore, {
-      addMailAccessRight: "addMailAccessRight"
-    }),*/
+    }),
+    ...mapActions(mailAccessRightsStore, {
+      deleteAccessRight: "doDeleteAccessRight"
+    }),
     resetValidation() {
       /* Trick to reset/clear native browser form validation state */
       this.show = false;
@@ -220,7 +220,6 @@ export default {
     },
     onReset(evt) {
       evt.preventDefault();
-      /* Reset our form values */
       this.resetForm();
       this.resetValidation();
     },
@@ -230,20 +229,9 @@ export default {
       this.resetValidation();
     },
     deleteAR(id) {
-      // eslint-disable-next-line
-        console.log("delete "+id);
-      var that = this;
-      axios
-        .post("backend/bloob/delete", { id })
-        .then(function(response) {
-          // eslint-disable-next-line
-            console.log('deleted'+response)
-          that.getAll();
-        })
-        .catch(function(error) {
-          // eslint-disable-next-line
-            console.log(error);
-        });
+      //var payload = { id: id };
+      this.deleteAccessRight(id);
+      this.getAll();
     },
     getByRole() {
       var that = this;
