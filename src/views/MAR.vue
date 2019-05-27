@@ -95,16 +95,6 @@
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
         >
-          <!--
-                <template slot="roleName" slot-scope="row" >
-                    <div v-if='(row.item.pillar == "")'>
-                    {{$t("role."+row.item.roleName)}}
-                    </div>
-                    <div v-else >
-                    {{$t("role."+row.item.roleName)}} - {{$t("role.pillar."+row.item.pillar)}}
-                    </div>
-                </template>
-                -->
           <template slot="roleName" slot-scope="row">
             {{ $t("role." + row.item.roleName) }}
           </template>
@@ -229,7 +219,6 @@ export default {
       this.resetValidation();
     },
     deleteAR(id) {
-      //var payload = { id: id };
       this.deleteAccessRight(id);
       this.getAll();
     },
