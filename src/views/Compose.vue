@@ -52,11 +52,11 @@
             $t("compose.form.placeholder.fromMail")
           }}</option>
           <option
-            v-for="testsender in senderMailTestdata"
-            :key="testsender.value"
-            :value="testsender.text"
+            v-for="sender in availableEmails"
+            :key="sender.mail"
+            :value="sender.mail"
           >
-            {{ testsender.text }}
+            {{ sender.mail }}
           </option>
         </b-form-select>
       </b-form-group>
@@ -104,7 +104,6 @@ import Mosaico from "@/components/Mosaico.vue"; // @ is an alias to /src
 import "vca-widget-user/dist/vca-widget-user.css";
 import { mapActions, mapMutations } from "vuex";
 import { mapFields, mapMultiRowFields } from "vuex-map-fields";
-import axios from "axios";
 
 const messageStore = "message";
 const userStore = "user";
@@ -121,19 +120,18 @@ export default {
   data() {
     return {
       involvedSupporter: [],
-      senderMailTestdata: [
+      /*senderMailTestdata: [
         {
           text: "noreply@vivaconagua.org",
           value: 1
         },
         { text: "berlin@vivaconagua.org", value: 2 },
         { text: "maxmusterman@vivaconagua.org", value: 3 }
-      ],
-      // TODO: get user name and role from Drops
+      ],*/
+      // TODO: get user name from Drops
       // userRoles: [{ text: 'Select One', value: null }, 'noreply@vivaconagua.org', 'berlin@vivaconagua.org', 'maxmusterman@vivaconagua.org'],
       // TODO: get user role from Drops and check access rights to mail adresses
-      show: true,
-      availableEmails:[]
+      show: true
     };
   },
   computed: {
@@ -147,44 +145,27 @@ export default {
     }),
     ...mapMultiRowFields(messageStore, {
       recipients: "recipients"
+    }),
+    ...mapMultiRowFields(userStore, {
+      availableEmails: "user.mails"
     })
   },
   methods: {
     ...mapActions(messageStore, {
       doResetMessageStateToDefault: "doResetMessageStateToDefault"
     }),
+    ...mapActions(userStore, {
+      getMails: "getMails"
+    }),
     ...mapMutations(messageStore, {
       addRecipient: "addRecipient"
     }),
     onSubmit() {
       this.doResetMessageStateToDefault();
-    },
-    getAvailablEmails() { 
-      var requestRoles = []
-      var requestCrew = ""
-      var that = this
-        for (var i = 0; i < this.roles.length;i++){
-        requestRoles.push(this.roles[i].name)
-      }
-      // eslint-disable-next-line
-      console.log("requesting mails for: Roles="+requestRoles+" and Crew="+requestCrew+".")
-      axios.post('backend/bloob/get', {
-        "roleName":requestRoles,"crewName":requestCrew
-      })
-      .then(function(response){
-        // eslint-disable-next-line
-        console.log('response from server: '+response.data)
-        that.availableEmails = response.data
-      })
-      .catch(function (error) {
-        // eslint-disable-next-line
-        console.log(error);
-      });
     }
   },
-  beforeMount(){
-    this.getAvailablEmails()
+  beforeMount() {
+    this.getMails();
   }
-}
-
+};
 </script>

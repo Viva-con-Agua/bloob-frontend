@@ -108,23 +108,11 @@
           </template>
         </b-table>
       </VcABox>
-      <VcABox :expand="true" title="Example">
-        <p>
-          get mails for Roles: employee, volunteer manager, Bereich: Bildung
-          Crews: Berlin
-        </p>
-        <b-button variant="primary" @click="getByRole()">get Mail</b-button>
-        <!-- eslint-disable-next-line -->
-            <li v-for="item in getResponse">
-          {{ item }}
-        </li>
-      </VcABox>
     </VcAColumn>
   </VcAFrame>
 </template>
 
 <script>
-import axios from "axios";
 import { VcAFrame, VcAColumn, VcABox } from "vca-widget-base";
 import { mapActions } from "vuex";
 import { mapFields, mapMultiRowFields } from "vuex-map-fields";
@@ -221,27 +209,6 @@ export default {
     deleteAR(id) {
       this.deleteAccessRight(id);
       this.getAll();
-    },
-    getByRole() {
-      var that = this;
-      // eslint-disable-next-line
-        console.log("get mails for Roles: employee, volunteer manager, Bereich: Bildung Crews: Berlin ");
-      //example request
-      axios
-        .post("backend/bloob/get", {
-          roleName: ["employee", "volunteer manager"],
-          pillar: "education",
-          crewName: "Berlin"
-        })
-        .then(function(response) {
-          // eslint-disable-next-line
-            console.log('response from server: '+response.data);
-          that.getResponse = response.data;
-        })
-        .catch(function(error) {
-          // eslint-disable-next-line
-            console.log(error);
-        });
     }
   }
 };
