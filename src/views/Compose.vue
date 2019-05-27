@@ -36,7 +36,7 @@
             $t("compose.form.placeholder.fromName")
           }}</option>
           <option v-for="role in roles" :key="role.name" :value="role.name">
-            {{ role.name }}
+            {{ $t("role." + role.name) }}
           </option>
         </b-form-select>
       </b-form-group>

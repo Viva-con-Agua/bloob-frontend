@@ -6,8 +6,8 @@
     "form": {
       "label": {
         "recipients": "To:",
-        "fromName": "Send from:",
-        "fromMail": "Send as:",
+        "fromName": "Send as:",
+        "fromMail": "Send from:",
         "subject": "Subject:"
       },
       "placeholder": {
