@@ -3,16 +3,17 @@
   <div id="app">
     <!-- The top navigation of Pool Pages -->
     <WidgetTopNavigation />
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/compose">Bloob</router-link> |
-      <router-link to="/about">Test Page</router-link> |
-    </div>
-    <div id="content">
-      <!-- this is where content from views is inserted -->
-      <router-view />
-    </div>
-    <!-- the bottom navigation of pool pages -->
+      <div id="nav">
+        <router-link to="/">Home</router-link> |
+        <router-link to="/compose">Bloob</router-link> |
+        <router-link to="/about">Test Page</router-link> |
+        <router-link to="/mar">Mail AR</router-link>
+      </div>
+      <div id="content">
+        <!-- this is where content from views is inserted -->
+        <router-view/>
+      </div>
+      <!-- the bottom navigation of pool pages -->
     <WidgetBottomNavigation />
   </div>
 </template>

@@ -32,11 +32,11 @@
         label-for="sender-name"
       >
         <b-form-select id="sender-name" required v-model="senderName">
-          <option :value="null">{{
+          <option :value="null" disabled>{{
             $t("compose.form.placeholder.fromName")
           }}</option>
           <option v-for="role in roles" :key="role.name" :value="role.name">
-            {{ role.name }}
+            {{ $t("role." + role.name) }}
           </option>
         </b-form-select>
       </b-form-group>
@@ -48,15 +48,15 @@
         label-for="sender-mail"
       >
         <b-form-select id="sender-mail" required v-model="senderMail">
-          <option :value="null">{{
+          <option :value="null" disabled>{{
             $t("compose.form.placeholder.fromMail")
           }}</option>
           <option
-            v-for="testsender in senderMailTestdata"
-            :key="testsender.value"
-            :value="testsender.text"
+            v-for="sender in availableEmails"
+            :key="sender.mail"
+            :value="sender.mail"
           >
-            {{ testsender.text }}
+            {{ sender.mail }}
           </option>
         </b-form-select>
       </b-form-group>
@@ -72,7 +72,7 @@
           type="text"
           v-model="subject"
           required
-          placeholder="Der Betreff deiner Email"
+          :placeholder="$t('compose.form.placeholder.subject')"
         />
       </b-form-group>
 
@@ -120,17 +120,7 @@ export default {
   data() {
     return {
       involvedSupporter: [],
-      senderMailTestdata: [
-        {
-          text: "noreply@vivaconagua.org",
-          value: 1
-        },
-        { text: "berlin@vivaconagua.org", value: 2 },
-        { text: "maxmusterman@vivaconagua.org", value: 3 }
-      ],
-      // TODO: get user name and role from Drops
-      // userRoles: [{ text: 'Select One', value: null }, 'noreply@vivaconagua.org', 'berlin@vivaconagua.org', 'maxmusterman@vivaconagua.org'],
-      // TODO: get user role from Drops and check access rights to mail adresses
+      // TODO: get user name from Drops
       show: true
     };
   },
@@ -145,11 +135,17 @@ export default {
     }),
     ...mapMultiRowFields(messageStore, {
       recipients: "recipients"
+    }),
+    ...mapMultiRowFields(userStore, {
+      availableEmails: "user.mails"
     })
   },
   methods: {
     ...mapActions(messageStore, {
       doResetMessageStateToDefault: "doResetMessageStateToDefault"
+    }),
+    ...mapActions(userStore, {
+      getMails: "getMails"
     }),
     ...mapMutations(messageStore, {
       addRecipient: "addRecipient"
@@ -157,6 +153,9 @@ export default {
     onSubmit() {
       this.doResetMessageStateToDefault();
     }
+  },
+  beforeMount() {
+    this.getMails();
   }
 };
 </script>

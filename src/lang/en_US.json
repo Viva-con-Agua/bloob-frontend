@@ -6,8 +6,8 @@
     "form": {
       "label": {
         "recipients": "To:",
-        "fromName": "Send from:",
-        "fromMail": "Send as:",
+        "fromName": "Send as:",
+        "fromMail": "Send from:",
         "subject": "Subject:"
       },
       "placeholder": {
@@ -20,6 +20,44 @@
         "submit": "Submit",
         "reset": "Clear form"
       }
+    }
+  },
+  "mars":{
+    "form":{
+      "label":{
+        "roleName": "Role name",
+        "crewName": "Crew name",
+        "email": "Email address",
+        "delete": "Delete",
+        "pillar": "Pillar"
+      },
+      "placeholder":{
+        "roleName": "The name of the role",
+        "crewName": "The name of the crew",
+        "email": "The email address",
+        "pillar": "No pillar"
+      },
+      "button": {
+        "submit": "Submit",
+        "reset": "Reset",
+        "show": "Show access rights"
+      },
+      "category":{
+        "add": "Add email access rights",
+        "all": "Existing email access rights"
+      }
+    }
+  },
+  "role":{
+    "supporter": "Supporter",
+    "employee": "Employee",
+    "admin": "Administrator",
+    "volunteer manager": "Volunteer Manager",
+    "pillar":{
+      "education": "Education",
+      "network": "Network",
+      "finance": "Finance",
+      "operation": "Operation"
     }
   },
   "errors": {
