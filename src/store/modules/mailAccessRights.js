@@ -6,6 +6,7 @@ const getDefaultState = () => {
     form: {
       roleName: "",
       pillar: "",
+      //uuid of crew shuld be used
       crewName: "",
       email: ""
     },
@@ -22,13 +23,16 @@ const actions = {
   doResetMailAccessRightsFormToDefault({ commit }) {
     commit("resetMailAccessRightsFormToDefault");
   },
+  // send a new access right to the backend to be added to the database
   doSubmitToBackend() {
     // eslint-disable-next-line
       console.log("sending post to backend")
     axios
       .post("/backend/bloob/create", {
+        // generic id, only used to build a structural verfiable access right; actual id is set in the backend
         id: 1,
         roleName: state.form.roleName,
+        // only volunteer manager uses the pillar information
         pillar:
           state.form.roleName == "volunteer manager" ? state.form.pillar : "",
         crewName: state.form.crewName,
@@ -43,6 +47,7 @@ const actions = {
           console.log(error);
       });
   },
+  // get a list of all mail access rights for all roles, pillars, crews
   doGetAllAccessRights({ commit }) {
     axios
       .get("/backend/bloob/all")
@@ -58,6 +63,7 @@ const actions = {
           console.log(error);
       });
   },
+  // delete the access right with this id from the database
   // without the unused commit the id parameter is not passed properly
   // eslint-disable-next-line no-unused-vars
   doDeleteAccessRight({ commit }, id) {

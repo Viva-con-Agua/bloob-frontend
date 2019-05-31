@@ -8,6 +8,8 @@ import { getField } from "vuex-map-fields";
 // }
 
 // Test user state as a prove of concept for the vuex store getter
+// currently we are able to receive uuid and roles from drops, the role information should include pillars -> check structure
+// crew information has to be received separately
 const state = {
   user: {
     uuid: "c3702bf6-9e98-4b7b-957e-261ea12c552c",

@@ -24,7 +24,7 @@
             </b-form-select>
           </b-form-group>
 
-          <!-- pillar line -->
+          <!-- pillar line, only show this if volunteer manager is selected -->
           <b-form-group
             id="pillarGroup"
             :label="$t('mars.form.label.pillar')"
@@ -128,6 +128,7 @@ export default {
   },
   data() {
     return {
+      // define fields to be displayed in the table
       fields: [
         {
           key: "roleName",
