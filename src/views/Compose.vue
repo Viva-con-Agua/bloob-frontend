@@ -120,17 +120,7 @@ export default {
   data() {
     return {
       involvedSupporter: [],
-      /*senderMailTestdata: [
-        {
-          text: "noreply@vivaconagua.org",
-          value: 1
-        },
-        { text: "berlin@vivaconagua.org", value: 2 },
-        { text: "maxmusterman@vivaconagua.org", value: 3 }
-      ],*/
       // TODO: get user name from Drops
-      // userRoles: [{ text: 'Select One', value: null }, 'noreply@vivaconagua.org', 'berlin@vivaconagua.org', 'maxmusterman@vivaconagua.org'],
-      // TODO: get user role from Drops and check access rights to mail adresses
       show: true
     };
   },

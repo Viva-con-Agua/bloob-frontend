@@ -128,8 +128,6 @@ export default {
   },
   data() {
     return {
-      roles: ["supporter", "employee", "admin", "volunteer manager"],
-      pillars: ["education", "network", "finance", "operation"],
       fields: [
         {
           key: "roleName",
@@ -155,9 +153,7 @@ export default {
       ],
       sortBy: "roleName",
       sortDesc: false,
-      all: [],
-      show: true,
-      getResponse: []
+      show: true
     };
   },
   computed: {
@@ -169,6 +165,12 @@ export default {
     }),
     ...mapMultiRowFields(mailAccessRightsStore, {
       allStore: "allAccessRights"
+    }),
+    ...mapMultiRowFields(mailAccessRightsStore, {
+      roles: "allRoles"
+    }),
+    ...mapMultiRowFields(mailAccessRightsStore, {
+      pillars: "allPillars"
     })
   },
   methods: {

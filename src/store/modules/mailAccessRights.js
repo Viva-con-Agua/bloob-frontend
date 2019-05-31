@@ -9,7 +9,10 @@ const getDefaultState = () => {
       crewName: "",
       email: ""
     },
-    allAccessRights: []
+    allAccessRights: [],
+    //existing roles and pillars should be recieved from another microservice and not hardoced - see Issue#9
+    allRoles: ["supporter", "employee", "admin", "volunteer manager"],
+    allPillars: ["education", "network", "finance", "operation"]
   };
 };
 
