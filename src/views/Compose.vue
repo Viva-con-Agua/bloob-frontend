@@ -147,10 +147,14 @@ export default {
     ...mapActions(userStore, {
       getMails: "getMails"
     }),
+    ...mapActions(messageStore, {
+      doSubmitToBackend: "doSubmitToBackend"
+    }),
     ...mapMutations(messageStore, {
       addRecipient: "addRecipient"
     }),
     onSubmit() {
+      this.doSubmitToBackend();
       this.doResetMessageStateToDefault();
     }
   },
