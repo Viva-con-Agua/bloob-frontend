@@ -12,8 +12,18 @@ const getDefaultState = () => {
     },
     allAccessRights: [],
     //existing roles and pillars should be recieved from another microservice and not hardoced - see Issue#9
-    allRoles: ["supporter", "employee", "admin", "volunteer manager"],
-    allPillars: ["education", "network", "finance", "operation"]
+    allRoles: [
+      { name: "supporter" },
+      { name: "employee" },
+      { name: "admin" },
+      { name: "volunteer manager" }
+    ],
+    allPillars: [
+      { name: "education" },
+      { name: "network" },
+      { name: "finance" },
+      { name: "operation" }
+    ]
   };
 };
 

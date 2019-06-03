@@ -18,8 +18,8 @@
               <option :value="null" disabled>
                 {{ $t("mars.form.placeholder.roleName") }}
               </option>
-              <option v-for="role in roles" :key="role" :value="role">
-                {{ $t("role." + role) }}
+              <option v-for="role in roles" :key="role.name" :value="role.name">
+                {{ $t("role." + role.name) }}
               </option>
             </b-form-select>
           </b-form-group>
@@ -35,8 +35,8 @@
               <option value="">
                 {{ $t("mars.form.placeholder.pillar") }}
               </option>
-              <option v-for="pillar in pillars" :key="pillar" :value="pillar">
-                {{ $t("role.pillar." + pillar) }}
+              <option v-for="pillar in pillars" :key="pillar.name" :value="pillar.name">
+                {{ $t("role.pillar." + pillar.name) }}
               </option>
             </b-form-select>
           </b-form-group>
