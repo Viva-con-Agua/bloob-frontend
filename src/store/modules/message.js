@@ -24,9 +24,9 @@ const actions = {
     // eslint-disable-next-line
       console.log("sending post to backend for delivery")
     axios
-      .post("/backend/bloob/create", {
+      .post("/backend/bloob/send", {
         recipients: state.recipients,
-        rolesubject: state.subject,
+        subject: state.subject,
         senderName: state.senderName,
         senderMail: state.senderMail,
         messageData: state.messageData
