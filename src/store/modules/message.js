@@ -25,10 +25,12 @@ const actions = {
       console.log("sending post to backend for delivery")
     axios
       .post("/backend/bloob/send", {
+	id: -1,
+	senderUUID: "get me from user store",        
+	senderName: state.senderName,
+        senderMail: state.senderMail,
         recipients: state.recipients,
         subject: state.subject,
-        senderName: state.senderName,
-        senderMail: state.senderMail,
         messageData: state.messageData
       })
       .then(function(response) {
