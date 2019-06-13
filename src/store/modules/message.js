@@ -23,15 +23,21 @@ const actions = {
   doSubmitToBackend() {
     // eslint-disable-next-line
       console.log("sending post to backend for delivery")
+    var senderCrew = {
+      id: "12",
+      name: "Berlin"
+    };
     axios
       .post("/backend/bloob/send", {
-	id: -1,
-	senderUUID: "get me from user store",        
-	senderName: state.senderName,
+        id: -1,
+        senderUUID: "get me from user store",
+        senderName: state.senderName,
         senderMail: state.senderMail,
+        senderCrew: senderCrew,
         recipients: state.recipients,
         subject: state.subject,
-        messageData: state.messageData
+        messageData: state.messageData,
+        status: "pending"
       })
       .then(function(response) {
         // eslint-disable-next-line

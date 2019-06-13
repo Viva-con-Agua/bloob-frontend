@@ -35,5 +35,10 @@ export default new Router({
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/MAR.vue")
     },
+    {
+      path: "/read",
+      name: "read",
+      component: () => import("./views/Read.vue")
+    }
   ]
 });

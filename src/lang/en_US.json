@@ -79,5 +79,25 @@
         "msg": "An internal error occurred! Please contact @:defaults.support and describe the problem."
       }
     }
+  },
+  "read": {
+    "form":{
+      "label":{
+        "sender": "Sender",
+        "senderRoleName": "Sent as",
+        "senderMailAddress": "Sent from",
+        "reciever": "Reciever",
+        "subject": "Sunject",
+        "date": "Date",
+        "status": "Status",
+        "senderCrew": "Sender crew"
+      },
+      "button": {
+        "show": "show emails"
+      },
+      "category":{
+        "all": "read emails"
+      }
+    }
   }
 }
