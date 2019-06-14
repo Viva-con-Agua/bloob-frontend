@@ -13,13 +13,13 @@
           hover
           v-if="show"
           :fields="fields"
-          :items="all"
+          :items="allMails"
           :primary-key="all.id"
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
         >
-          <template slot="senderRoleName" slot-scope="row">
-            {{ $t("role." + row.item.senderRoleName) }}
+          <template slot="senderName" slot-scope="row">
+            {{ $t("role." + row.item.senderName) }}
           </template>
         </b-table>
       </VcABox>
@@ -30,9 +30,10 @@
 
 <script>
 import { VcAFrame, VcAColumn, VcABox } from "vca-widget-base";
-//import { mapActions } from "vuex";
-//import { mapFields, mapMultiRowFields } from "vuex-map-fields";
+import { mapActions } from "vuex";
+import { mapMultiRowFields } from "vuex-map-fields";
 
+const mailStore = "readMails";
 
 export default {
   name: "read",
@@ -51,12 +52,12 @@ export default {
           sortable: true
         },
         {
-          key: "senderRoleName",
+          key: "senderName",
           label: this.$i18n.t("read.form.label.senderRoleName"),
           sortable: true
         },
         {
-          key: "senderMailAddress",
+          key: "senderMail",
           label: this.$i18n.t("read.form.label.senderMailAddress"),
           sortable: true
         },
@@ -95,6 +96,23 @@ export default {
         {"id":3,"sender":"Dennis","senderRoleName":"admin","senderMailAddress":"it@vca.org","senderCrew": "Berlin","reciever":"3547 Personen","subject":"Neues Feature","date":"03.03.2018","status": "pending"}
       ]
     };
+  },
+  computed: {
+    ...mapMultiRowFields(mailStore, {
+      allMails: "mails"
+    })
+  },
+  methods: {
+    ...mapActions(mailStore, {
+      doResetStateToDefault: "doResetStateToDefault"
+    }),
+    ...mapActions(mailStore, {
+      doGetAllMails: "doGetAllMails"
+    }),
+  },
+  beforeMount() {
+    this.doResetStateToDefault();
+    this.doGetAllMails();
   }
 }
 </script>
