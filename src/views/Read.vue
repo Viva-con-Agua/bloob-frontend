@@ -21,6 +21,9 @@
           <template slot="senderName" slot-scope="row">
             {{ $t("role." + row.item.senderName) }}
           </template>
+          <template slot="date" slot-scope="row">
+            {{ showDate(row.item.date) }}
+          </template>
         </b-table>
       </VcABox>
     </VcAColumn>
@@ -109,6 +112,11 @@ export default {
     ...mapActions(mailStore, {
       doGetAllMails: "doGetAllMails"
     }),
+    showDate(date) {
+      var newDate = new Date(date);
+      var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      return newDate.toLocaleDateString(options)
+    }
   },
   beforeMount() {
     this.doResetStateToDefault();

@@ -4,14 +4,12 @@ import axios from "axios";
 const getDefaultState = () => {
   return {
     mails: []
-    
   };
 };
 
 const state = getDefaultState();
 
 const actions = {
-
   doResetStateToDefault({ commit }) {
     commit("resetToDefault");
   },
@@ -34,22 +32,22 @@ const actions = {
 };
 
 const getters = {
-    getField,
-    getMessageData(state) {
-      return state.form.roleName;
-    }
-  };
+  getField,
+  getMails(state) {
+    return state.mails;
+  }
+};
 
 const mutations = {
-    updateField,
-    resetToDefault(state) {
-      // If you do not use assign, the object will loose observers and thus reactivity
-      Object.assign(state, getDefaultState());
-    },
-    addMail(state, mail) {
-      state.mails.push(mail.mail);
-    }
-  };
+  updateField,
+  resetToDefault(state) {
+    // If you do not use assign, the object will loose observers and thus reactivity
+    Object.assign(state, getDefaultState());
+  },
+  addMail(state, mail) {
+    state.mails.push(mail.mail);
+  }
+};
 
 export default {
   namespaced: true,
