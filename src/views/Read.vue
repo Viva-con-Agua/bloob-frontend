@@ -2,19 +2,22 @@
   <VcAFrame>
     <VcAColumn size="90%">
       <VcABox :expand="true" :title="$t('read.form.category.all')">
-    <!--
-        <b-button variant="primary" @click="getAll()">{{
-          $t("read.form.button.show")
-        }}</b-button>
-    -->
+        <!--
+          <b-button variant="primary" @click="getAll()">{{
+            $t("read.form.button.show")
+          }}</b-button>
+        -->
         <b-table
           responsive
           striped
           hover
+          selectable
+          select-mode="single"
+          selectedVariant="success"
           v-if="show"
           :fields="fields"
           :items="allMails"
-          :primary-key="all.id"
+          :primary-key="allMails.id"
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
         >
@@ -24,12 +27,19 @@
           <template slot="date" slot-scope="row">
             {{ showDate(row.item.date) }}
           </template>
+          <template slot="senderCrew" slot-scope="row">
+            {{ row.item.senderCrew.name }}
+          </template>
+          <template :slot="$t('read.form.label.detail')" slot-scope="row">
+            <b-button size="sm" @click="showMail(row.item.id)" class="mr-2">
+              {{ $t("read.form.label.detail") }}
+            </b-button>
+          </template>
         </b-table>
       </VcABox>
     </VcAColumn>
   </VcAFrame>
 </template>
-
 
 <script>
 import { VcAFrame, VcAColumn, VcABox } from "vca-widget-base";
@@ -70,7 +80,7 @@ export default {
           sortable: true
         },
         {
-          key: "reciever",  //Problem: We have many recievers
+          key: "recipients", //Problem: We have many recievers
           label: this.$i18n.t("read.form.label.reciever"),
           sortable: false
         },
@@ -88,16 +98,12 @@ export default {
           key: "status",
           label: this.$i18n.t("read.form.label.status"),
           sortable: true
-        }
+        },
+        this.$i18n.t("read.form.label.detail")
       ],
-      sortBy: "roleName",
+      sortBy: "date",
       sortDesc: false,
-      show: true,
-      all: [
-        {"id":1,"sender":"Tom","senderRoleName":"supporter","senderMailAddress":"sup@vca.org","senderCrew": "Berlin","reciever":"Mario","subject":"Neuheiten","date":"07.06.2019","status": "sent"},
-        {"id":2,"sender":"Mario","senderRoleName":"employee","senderMailAddress":"emp@vca.org","senderCrew": "Berlin","reciever":["Klaus","Peter","Jürgen"],"subject":"News","date":"08.06.2019","status": "sent"},
-        {"id":3,"sender":"Dennis","senderRoleName":"admin","senderMailAddress":"it@vca.org","senderCrew": "Berlin","reciever":"3547 Personen","subject":"Neues Feature","date":"03.03.2018","status": "pending"}
-      ]
+      show: true
     };
   },
   computed: {
@@ -112,15 +118,34 @@ export default {
     ...mapActions(mailStore, {
       doGetAllMails: "doGetAllMails"
     }),
+    ...mapActions(mailStore, {
+      doShowDetails: "doShowDetails"
+    }),
     showDate(date) {
       var newDate = new Date(date);
       var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      return newDate.toLocaleDateString(options)
-    }
+      return newDate.toLocaleDateString(options);
+    },
+    showMail(id) {
+      // eslint-disable-next-line
+        console.log(id);
+      this.doShowDetails(id);
+      this.$router.push({ name: "detail" });
+    } /*,
+    rowSelected(items) {
+        //alert(items)
+        this.selected = items
+    }*/
+    /*,
+    test(item) {
+        // eslint-disable-next-line
+      console.log(Object.keys(JSON.stringify(item)))
+      this.selected = item.value;
+    }*/
   },
   beforeMount() {
     this.doResetStateToDefault();
     this.doGetAllMails();
   }
-}
+};
 </script>

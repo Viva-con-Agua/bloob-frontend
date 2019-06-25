@@ -87,16 +87,18 @@
         "senderRoleName": "Sent as",
         "senderMailAddress": "Sent from",
         "reciever": "Reciever",
-        "subject": "Sunject",
+        "subject": "Subject",
         "date": "Date",
         "status": "Status",
-        "senderCrew": "Sender crew"
+        "senderCrew": "Sender crew",
+	"detail": "Details"
       },
       "button": {
         "show": "show emails"
       },
       "category":{
-        "all": "read emails"
+        "all": "See all emails",
+        "detail": "read email"
       }
     }
   }

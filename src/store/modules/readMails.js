@@ -3,7 +3,8 @@ import axios from "axios";
 
 const getDefaultState = () => {
   return {
-    mails: []
+    mails: [],
+    details: 0
   };
 };
 
@@ -12,6 +13,14 @@ const state = getDefaultState();
 const actions = {
   doResetStateToDefault({ commit }) {
     commit("resetToDefault");
+  },
+
+  doShowDetails({ commit }, id) {
+    // eslint-disable-next-line
+      console.log("show Mail with id: "+id);
+        commit("showMail", {
+          id: id
+        });
   },
 
   doGetAllMails({ commit }) {
@@ -46,6 +55,9 @@ const mutations = {
   },
   addMail(state, mail) {
     state.mails.push(mail.mail);
+  },
+  showMail(state, id) {
+    state.details = id.id;
   }
 };
 

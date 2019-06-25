@@ -39,6 +39,11 @@ export default new Router({
       path: "/read",
       name: "read",
       component: () => import("./views/Read.vue")
+    },
+    {
+      path: "/read/detail",
+      name: "detail",
+      component: () => import("./views/ReadDetails.vue")
     }
   ]
 });

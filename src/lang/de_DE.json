@@ -90,13 +90,15 @@
         "subject": "Betreff",
         "date": "Datum",
         "status": "Status",
-        "senderCrew": "Absender Crew"
+        "senderCrew": "Absender Crew",
+	"detail": "Details"
       },
       "button": {
         "show": "Zeige Emails"
       },
       "category":{
-        "all": "Emails lesen"
+        "all": "Alle Emails einsehen",
+        "detail": "Email lesen"
       }
     }
   }
