@@ -20,20 +20,20 @@ const actions = {
   doResetMessageStateToDefault({ commit }) {
     commit("resetMessageStateToDefault");
   },
-  doSubmitToBackend() {
+  doSubmitToBackend(rootState) {
     // eslint-disable-next-line
       console.log("sending post to backend for delivery")
-    var senderCrew = {
+    /*var senderCrew = {
       id: "12",
       name: "Berlin"
-    };
+    };*/
     axios
       .post("/backend/bloob/send", {
         id: -1,
-        senderUUID: "get me from user store",
+        senderUUID: rootState.rootState.user.user.uuid,
         senderName: state.senderName,
         senderMail: state.senderMail,
-        senderCrew: senderCrew,
+        senderCrew: rootState.rootState.user.user.crew,
         recipients: state.recipients,
         subject: state.subject,
         messageData: state.messageData,

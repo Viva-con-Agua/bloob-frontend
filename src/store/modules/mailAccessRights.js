@@ -83,7 +83,7 @@ const actions = {
       .post("backend/bloob/delete", { id })
       .then(function(response) {
         // eslint-disable-next-line
-          console.log('deleted'+response);
+          console.log(response);
       })
       .catch(function(error) {
         // eslint-disable-next-line

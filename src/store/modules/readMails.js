@@ -18,9 +18,9 @@ const actions = {
   doShowDetails({ commit }, id) {
     // eslint-disable-next-line
       console.log("show Mail with id: "+id);
-        commit("showMail", {
-          id: id
-        });
+    commit("showMail", {
+      id: id
+    });
   },
 
   doGetAllMails({ commit }) {
