@@ -15,12 +15,17 @@
           select-mode="single"
           selectedVariant="success"
           v-if="show"
+          :busy="isBusy"
           :fields="fields"
           :items="allMails"
           :primary-key="allMails.id"
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
         >
+          <div slot="table-busy" class="text-center text-danger my-2">
+            <b-spinner class="align-middle"></b-spinner>
+            <!--<strong>Loading...</strong>-->
+          </div>
           <template slot="senderName" slot-scope="row">
             {{ $t("role." + row.item.senderName) }}
           </template>
@@ -103,6 +108,7 @@ export default {
       ],
       sortBy: "date",
       sortDesc: false,
+      isBusy: false,
       show: true
     };
   },
@@ -144,8 +150,12 @@ export default {
     }*/
   },
   beforeMount() {
+    this.isBusy = !this.isBusy;
     this.doResetStateToDefault();
-    this.doGetAllMails();
+    var that = this;
+    this.doGetAllMails().then(function() {
+      that.isBusy = !that.isBusy;
+    });
   }
 };
 </script>

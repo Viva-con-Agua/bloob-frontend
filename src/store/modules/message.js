@@ -23,10 +23,6 @@ const actions = {
   doSubmitToBackend(rootState) {
     // eslint-disable-next-line
       console.log("sending post to backend for delivery")
-    /*var senderCrew = {
-      id: "12",
-      name: "Berlin"
-    };*/
     axios
       .post("/backend/bloob/send", {
         id: -1,

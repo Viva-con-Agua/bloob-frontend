@@ -88,13 +88,17 @@
           responsive
           striped
           hover
-          v-if="show"
+          :busy="isBusy"
           :fields="fields"
           :items="allStore"
           :primary-key="allStore.id"
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
         >
+          <div slot="table-busy" class="text-center text-danger my-2">
+            <b-spinner class="align-middle"></b-spinner>
+            <!--<strong>Loading...</strong>-->
+          </div>
           <template slot="roleName" slot-scope="row">
             {{ $t("role." + row.item.roleName) }}
           </template>
@@ -154,6 +158,7 @@ export default {
       ],
       sortBy: "roleName",
       sortDesc: false,
+      isBusy: false,
       show: true
     };
   },
@@ -205,13 +210,19 @@ export default {
       this.resetValidation();
     },
     getAll() {
+      this.isBusy = !this.isBusy;
       this.resetForm();
-      this.getAllAccessRights();
-      this.resetValidation();
+      var that = this;
+      this.getAllAccessRights().then(function() {
+        that.isBusy = !that.isBusy;
+      });
     },
     deleteAR(id) {
-      this.deleteAccessRight(id);
-      this.getAll();
+      var that = this;
+      this.deleteAccessRight(id).then(function() {
+        that.getAll();
+      });
+      
     }
   }
 };
