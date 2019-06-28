@@ -23,7 +23,8 @@ const getDefaultState = () => {
       { name: "network" },
       { name: "finance" },
       { name: "operation" }
-    ]
+    ],
+    busy: false
   };
 };
 
@@ -59,6 +60,8 @@ const actions = {
   },
   // get a list of all mail access rights for all roles, pillars, crews
   doGetAllAccessRights({ commit }) {
+    commit("setBusyTrue");
+    commit("clearAllAccessRights");
     axios
       .get("/backend/bloob/all")
       .then(function(response) {
@@ -66,17 +69,20 @@ const actions = {
           commit("addMailAccessRight", {
             mailAccessRight: response.data[i]
           });
+          commit("setBusyFalse");
         }
       })
       .catch(function(error) {
         // eslint-disable-next-line
           console.log(error);
+        commit("setBusyFalse");
       });
   },
   // delete the access right with this id from the database
   // without the unused commit the id parameter is not passed properly
   // eslint-disable-next-line no-unused-vars
-  doDeleteAccessRight({ commit }, id) {
+  doDeleteAccessRight({ commit, dispatch }, id) {
+    commit("setBusyTrue");
     // eslint-disable-next-line
       console.log("delete "+id);
     axios
@@ -84,6 +90,7 @@ const actions = {
       .then(function(response) {
         // eslint-disable-next-line
           console.log(response);
+        dispatch("doGetAllAccessRights");
       })
       .catch(function(error) {
         // eslint-disable-next-line
@@ -107,6 +114,15 @@ const mutations = {
   },
   addMailAccessRight(state, mailAccessRight) {
     state.allAccessRights.push(mailAccessRight.mailAccessRight);
+  },
+  setBusyTrue(state) {
+    state.busy = true;
+  },
+  setBusyFalse(state) {
+    state.busy = false;
+  },
+  clearAllAccessRights(state) {
+    state.allAccessRights = [];
   }
 };
 

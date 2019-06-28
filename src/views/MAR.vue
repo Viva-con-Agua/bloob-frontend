@@ -81,7 +81,7 @@
         </b-form>
       </VcABox>
       <VcABox :expand="true" :title="$t('mars.form.category.all')">
-        <b-button variant="primary" @click="getAll()">{{
+        <b-button variant="primary" @click="getAllAccessRights()">{{
           $t("mars.form.button.show")
         }}</b-button>
         <b-table
@@ -106,7 +106,7 @@
             {{ $t("role.pillar." + row.item.pillar) }}
           </template>
           <template :slot="$t('mars.form.label.delete')" slot-scope="row">
-            <b-button size="sm" @click="deleteAR(row.item.id)" class="mr-2">
+            <b-button size="sm" @click="deleteAccessRight(row.item.id)" class="mr-2">
               {{ $t("mars.form.label.delete") }}
             </b-button>
           </template>
@@ -158,7 +158,6 @@ export default {
       ],
       sortBy: "roleName",
       sortDesc: false,
-      isBusy: false,
       show: true
     };
   },
@@ -167,29 +166,20 @@ export default {
       formRoleName: "form.roleName",
       formPillar: "form.pillar",
       formCrewName: "form.crewName",
-      formEmail: "form.email"
+      formEmail: "form.email",
+      isBusy: "busy"
     }),
     ...mapMultiRowFields(mailAccessRightsStore, {
-      allStore: "allAccessRights"
-    }),
-    ...mapMultiRowFields(mailAccessRightsStore, {
-      roles: "allRoles"
-    }),
-    ...mapMultiRowFields(mailAccessRightsStore, {
+      allStore: "allAccessRights",
+      roles: "allRoles",
       pillars: "allPillars"
     })
   },
   methods: {
     ...mapActions(mailAccessRightsStore, {
-      resetForm: "doResetMailAccessRightsFormToDefault"
-    }),
-    ...mapActions(mailAccessRightsStore, {
-      submitForm: "doSubmitToBackend"
-    }),
-    ...mapActions(mailAccessRightsStore, {
-      getAllAccessRights: "doGetAllAccessRights"
-    }),
-    ...mapActions(mailAccessRightsStore, {
+      resetForm: "doResetMailAccessRightsFormToDefault",
+      submitForm: "doSubmitToBackend",
+      getAllAccessRights: "doGetAllAccessRights",
       deleteAccessRight: "doDeleteAccessRight"
     }),
     resetValidation() {
@@ -208,21 +198,6 @@ export default {
       evt.preventDefault();
       this.resetForm();
       this.resetValidation();
-    },
-    getAll() {
-      this.isBusy = !this.isBusy;
-      this.resetForm();
-      var that = this;
-      this.getAllAccessRights().then(function() {
-        that.isBusy = !that.isBusy;
-      });
-    },
-    deleteAR(id) {
-      var that = this;
-      this.deleteAccessRight(id).then(function() {
-        that.getAll();
-      });
-      
     }
   }
 };

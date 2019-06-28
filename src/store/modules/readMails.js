@@ -4,7 +4,8 @@ import axios from "axios";
 const getDefaultState = () => {
   return {
     mails: [],
-    details: 0
+    details: 0,
+    busy: false
   };
 };
 
@@ -24,6 +25,10 @@ const actions = {
   },
 
   doGetAllMails({ commit }) {
+    // eslint-disable-next-line
+      console.log("get all mails");
+    commit("resetToDefault");
+    commit("setBusyTrue");
     axios
       .get("/backend/bloob/getAllMails")
       .then(function(response) {
@@ -32,10 +37,12 @@ const actions = {
             mail: response.data[i]
           });
         }
+        commit("setBusyFalse");
       })
       .catch(function(error) {
         // eslint-disable-next-line
           console.log(error);
+        commit("setBusyFalse");
       });
   }
 };
@@ -58,6 +65,12 @@ const mutations = {
   },
   showMail(state, id) {
     state.details = id.id;
+  },
+  setBusyTrue(state) {
+    state.busy = true;
+  },
+  setBusyFalse(state) {
+    state.busy = false;
   }
 };
 

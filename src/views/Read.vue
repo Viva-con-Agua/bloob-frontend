@@ -2,11 +2,6 @@
   <VcAFrame>
     <VcAColumn size="90%">
       <VcABox :expand="true" :title="$t('read.form.category.all')">
-        <!--
-          <b-button variant="primary" @click="getAll()">{{
-            $t("read.form.button.show")
-          }}</b-button>
-        -->
         <b-table
           responsive
           striped
@@ -14,7 +9,6 @@
           selectable
           select-mode="single"
           selectedVariant="success"
-          v-if="show"
           :busy="isBusy"
           :fields="fields"
           :items="allMails"
@@ -28,6 +22,11 @@
           </div>
           <template slot="senderName" slot-scope="row">
             {{ $t("role." + row.item.senderName) }}
+          </template>
+          <template slot="recipients" slot-scope="row">
+            <span v-for="(element, index) in row.item.recipients" :key="element">
+            <span v-if="index != 0">, </span><span>{{ element }}</span>
+          </span>
           </template>
           <template slot="date" slot-scope="row">
             {{ showDate(row.item.date) }}
@@ -49,7 +48,7 @@
 <script>
 import { VcAFrame, VcAColumn, VcABox } from "vca-widget-base";
 import { mapActions } from "vuex";
-import { mapMultiRowFields } from "vuex-map-fields";
+import { mapFields, mapMultiRowFields } from "vuex-map-fields";
 
 const mailStore = "readMails";
 
@@ -108,23 +107,20 @@ export default {
       ],
       sortBy: "date",
       sortDesc: false,
-      isBusy: false,
-      show: true
     };
   },
   computed: {
     ...mapMultiRowFields(mailStore, {
       allMails: "mails"
+    }),
+    ...mapFields(mailStore, {
+      isBusy: "busy"
     })
   },
   methods: {
     ...mapActions(mailStore, {
-      doResetStateToDefault: "doResetStateToDefault"
-    }),
-    ...mapActions(mailStore, {
-      doGetAllMails: "doGetAllMails"
-    }),
-    ...mapActions(mailStore, {
+      doResetStateToDefault: "doResetStateToDefault",
+      doGetAllMails: "doGetAllMails",
       doShowDetails: "doShowDetails"
     }),
     showDate(date) {
@@ -137,25 +133,10 @@ export default {
         console.log(id);
       this.doShowDetails(id);
       this.$router.push({ name: "detail" });
-    } /*,
-    rowSelected(items) {
-        //alert(items)
-        this.selected = items
-    }*/
-    /*,
-    test(item) {
-        // eslint-disable-next-line
-      console.log(Object.keys(JSON.stringify(item)))
-      this.selected = item.value;
-    }*/
+    }
   },
   beforeMount() {
-    this.isBusy = !this.isBusy;
-    this.doResetStateToDefault();
-    var that = this;
-    this.doGetAllMails().then(function() {
-      that.isBusy = !that.isBusy;
-    });
+    this.doGetAllMails()
   }
 };
 </script>
