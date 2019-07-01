@@ -24,13 +24,16 @@ const actions = {
     });
   },
 
-  doGetAllMails({ commit }) {
+  doGetAllMails({ commit }, showAll) {
     // eslint-disable-next-line
       console.log("get all mails");
     commit("resetToDefault");
     commit("setBusyTrue");
+    var path = showAll
+      ? "/backend/bloob/getAllMails"
+      : "/backend/bloob/getMyMails";
     axios
-      .get("/backend/bloob/getAllMails")
+      .get(path)
       .then(function(response) {
         for (var i = 0; i < response.data.length; i++) {
           commit("addMail", {

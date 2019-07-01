@@ -2,6 +2,10 @@
   <VcAFrame>
     <VcAColumn size="90%">
       <VcABox :expand="true" :title="$t('read.form.category.all')">
+        <b-form-checkbox v-model="showAll" name="check-button" @change="reload" switch>
+          {{ $t("read.form.button.switchAll") }} 
+          <b>{{ showAll?$t("read.form.button.switchYes"):$t("read.form.button.switchNo") }}</b>
+        </b-form-checkbox>
         <b-table
           responsive
           striped
@@ -107,6 +111,7 @@ export default {
       ],
       sortBy: "date",
       sortDesc: false,
+      showAll: false
     };
   },
   computed: {
@@ -133,10 +138,17 @@ export default {
         console.log(id);
       this.doShowDetails(id);
       this.$router.push({ name: "detail" });
+    },
+    reload() {
+      this.$nextTick(() => {
+        // wait for switch to change value of showAll
+         this.doGetAllMails(this.showAll)
+      });
+     
     }
   },
   beforeMount() {
-    this.doGetAllMails()
+    this.doGetAllMails(this.showAll)
   }
 };
 </script>

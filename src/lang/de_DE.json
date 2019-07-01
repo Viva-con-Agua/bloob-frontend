@@ -91,10 +91,13 @@
         "date": "Datum",
         "status": "Status",
         "senderCrew": "Absender Crew",
-	"detail": "Details"
+	      "detail": "Details"
       },
       "button": {
-        "show": "Zeige Emails"
+        "show": "Zeige Emails",
+        "switchAll": "Zeige Emails von ",
+        "switchYes": "allen",
+        "switchNo": "mir"
       },
       "category":{
         "all": "Alle Emails einsehen",

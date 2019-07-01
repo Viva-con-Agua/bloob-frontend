@@ -94,7 +94,10 @@
 	"detail": "Details"
       },
       "button": {
-        "show": "show emails"
+        "show": "show emails",
+        "switchAll": "Show Emails from ",
+        "switchYes": "all",
+        "switchNo": "me"
       },
       "category":{
         "all": "See all emails",
