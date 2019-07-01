@@ -1,4 +1,5 @@
 import { getField, updateField } from "vuex-map-fields";
+import axios from "axios";
 
 const getDefaultState = () => {
   return {
@@ -18,6 +19,30 @@ const actions = {
   },
   doResetMessageStateToDefault({ commit }) {
     commit("resetMessageStateToDefault");
+  },
+  doSubmitToBackend(rootState) {
+    // eslint-disable-next-line
+      console.log("sending post to backend for delivery")
+    axios
+      .post("/backend/bloob/send", {
+        id: -1,
+        senderUUID: rootState.rootState.user.user.uuid,
+        senderName: state.senderName,
+        senderMail: state.senderMail,
+        senderCrew: rootState.rootState.user.user.crew,
+        recipients: state.recipients,
+        subject: state.subject,
+        messageData: state.messageData,
+        status: "pending"
+      })
+      .then(function(response) {
+        // eslint-disable-next-line
+          console.log(response);
+      })
+      .catch(function(error) {
+        // eslint-disable-next-line
+          console.log(error);
+      });
   }
 };
 

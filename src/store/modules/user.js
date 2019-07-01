@@ -14,7 +14,10 @@ const state = {
   user: {
     uuid: "c3702bf6-9e98-4b7b-957e-261ea12c552c",
     roles: [{ name: "employee" }, { name: "volunteer manager" }],
-    crew: "Berlin",
+    crew: {
+      id: "12",
+      name: "Berlin"
+    },
     pillar: "education",
     mails: []
   },
@@ -60,7 +63,7 @@ const getters = {
             found ||
             (supporterRole.name === role.name &&
               ((role.hasOwnProperty("crew") &&
-                supporterRole.crewName === role.crew) ||
+                supporterRole.crewName === role.crew.name) ||
                 !role.hasOwnProperty("crew")) &&
               ((role.hasOwnProperty("pillar") &&
                 supporterRole.pillar === role.pillar) ||
@@ -124,7 +127,7 @@ const actions = {
       roleName[i] = state.user.roles[i].name;
     }
     var pillar = state.user.pillar;
-    var crewName = state.user.crew;
+    var crewName = state.user.crew.name;
     // eslint-disable-next-line
     console.log("get mails for roles: "+roleName+" crew: "+crewName+" pillar: "+pillar);
     axios

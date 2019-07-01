@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import message from "./modules/message";
 import user from "./modules/user";
 import mailAccessRights from "./modules/mailAccessRights";
+import readMails from "./modules/readMails";
 
 Vue.use(Vuex);
 
@@ -17,7 +18,8 @@ export default new Vuex.Store({
   modules: {
     message,
     user,
-    mailAccessRights
+    mailAccessRights,
+    readMails
   },
   strict: debug
 });

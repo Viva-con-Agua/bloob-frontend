@@ -81,20 +81,24 @@
         </b-form>
       </VcABox>
       <VcABox :expand="true" :title="$t('mars.form.category.all')">
-        <b-button variant="primary" @click="getAll()">{{
+        <b-button variant="primary" @click="getAllAccessRights()">{{
           $t("mars.form.button.show")
         }}</b-button>
         <b-table
           responsive
           striped
           hover
-          v-if="show"
+          :busy="isBusy"
           :fields="fields"
           :items="allStore"
           :primary-key="allStore.id"
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
         >
+          <div slot="table-busy" class="text-center text-danger my-2">
+            <b-spinner class="align-middle"></b-spinner>
+            <!--<strong>Loading...</strong>-->
+          </div>
           <template slot="roleName" slot-scope="row">
             {{ $t("role." + row.item.roleName) }}
           </template>
@@ -102,7 +106,7 @@
             {{ $t("role.pillar." + row.item.pillar) }}
           </template>
           <template :slot="$t('mars.form.label.delete')" slot-scope="row">
-            <b-button size="sm" @click="deleteAR(row.item.id)" class="mr-2">
+            <b-button size="sm" @click="deleteAccessRight(row.item.id)" class="mr-2">
               {{ $t("mars.form.label.delete") }}
             </b-button>
           </template>
@@ -162,29 +166,20 @@ export default {
       formRoleName: "form.roleName",
       formPillar: "form.pillar",
       formCrewName: "form.crewName",
-      formEmail: "form.email"
+      formEmail: "form.email",
+      isBusy: "busy"
     }),
     ...mapMultiRowFields(mailAccessRightsStore, {
-      allStore: "allAccessRights"
-    }),
-    ...mapMultiRowFields(mailAccessRightsStore, {
-      roles: "allRoles"
-    }),
-    ...mapMultiRowFields(mailAccessRightsStore, {
+      allStore: "allAccessRights",
+      roles: "allRoles",
       pillars: "allPillars"
     })
   },
   methods: {
     ...mapActions(mailAccessRightsStore, {
-      resetForm: "doResetMailAccessRightsFormToDefault"
-    }),
-    ...mapActions(mailAccessRightsStore, {
-      submitForm: "doSubmitToBackend"
-    }),
-    ...mapActions(mailAccessRightsStore, {
-      getAllAccessRights: "doGetAllAccessRights"
-    }),
-    ...mapActions(mailAccessRightsStore, {
+      resetForm: "doResetMailAccessRightsFormToDefault",
+      submitForm: "doSubmitToBackend",
+      getAllAccessRights: "doGetAllAccessRights",
       deleteAccessRight: "doDeleteAccessRight"
     }),
     resetValidation() {
@@ -203,15 +198,6 @@ export default {
       evt.preventDefault();
       this.resetForm();
       this.resetValidation();
-    },
-    getAll() {
-      this.resetForm();
-      this.getAllAccessRights();
-      this.resetValidation();
-    },
-    deleteAR(id) {
-      this.deleteAccessRight(id);
-      this.getAll();
     }
   }
 };

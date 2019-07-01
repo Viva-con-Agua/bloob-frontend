@@ -79,5 +79,30 @@
         "msg": "Ein interner Fehler ist aufgetreten. Bitte kontaktiere @:defaults.support und beschreibe das Problem."
       }
     }
+  },
+  "read": {
+    "form":{
+      "label":{
+        "sender": "Absender",
+        "senderRoleName": "Gesendet als",
+        "senderMailAddress": "Gesendet von",
+        "reciever": "Empfänger",
+        "subject": "Betreff",
+        "date": "Datum",
+        "status": "Status",
+        "senderCrew": "Absender Crew",
+	      "detail": "Details"
+      },
+      "button": {
+        "show": "Zeige Emails",
+        "switchAll": "Zeige Emails von ",
+        "switchYes": "allen",
+        "switchNo": "mir"
+      },
+      "category":{
+        "all": "Alle Emails einsehen",
+        "detail": "Email lesen"
+      }
+    }
   }
 }
