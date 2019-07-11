@@ -7,17 +7,11 @@
       {{ $t("compose.form.label.recipients") }} {{ involvedSupporter }}
     </div>
 
-    <!-- TODO: import user search from Drops and save selected recievers
-              -> WidgetUserAutocomplete can search in drops user data
-              -> Problem i need the right event to recieve a selected user
-                @vca-use-selection does not trigger, am i missing something?
-              trying multiple fields and event names, searching for the right one
-        -->
-    <WidgetUserAutocomplete
+    <WidgetAutocompleteMultiQuery
+      id="recipients-input"
       :placeholder="$t('compose.form.placeholder.recipients')"
       :preselection="involvedSupporter"
-      :SelectableUser="recipients"
-      @vca-user-selection="addRecipient"
+      @vca-autocomplete-multiquery-selection="addRecipients"
     />
 
     <b-form
@@ -99,10 +93,10 @@
 
 <script>
 //import { FormItem, Select, Option } from 'element-ui'
-import { WidgetUserAutocomplete } from "vca-widget-user";
+import { WidgetAutocompleteMultiQuery } from "vca-widget-user";
 import Mosaico from "@/components/Mosaico.vue"; // @ is an alias to /src
 import "vca-widget-user/dist/vca-widget-user.css";
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 import { mapFields, mapMultiRowFields } from "vuex-map-fields";
 
 const messageStore = "message";
@@ -111,7 +105,7 @@ const userStore = "user";
 export default {
   name: "compose",
   components: {
-    WidgetUserAutocomplete,
+    WidgetAutocompleteMultiQuery,
     Mosaico
     //  FormItem,
     //  Select,
@@ -125,6 +119,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(messageStore, {
+     getRecipients: "getRecipients"
+   }),
     ...mapFields(messageStore, {
       subject: "subject",
       senderName: "senderName",
@@ -132,10 +129,10 @@ export default {
     }),
     ...mapFields(userStore, {
       roles: "user.roles"
-    }),
+    }),/*
     ...mapMultiRowFields(messageStore, {
       recipients: "recipients"
-    }),
+    }),*/
     ...mapMultiRowFields(userStore, {
       availableEmails: "user.mails"
     })
@@ -151,7 +148,7 @@ export default {
       doSubmitToBackend: "doSubmitToBackend"
     }),
     ...mapMutations(messageStore, {
-      addRecipient: "addRecipient"
+      addRecipients: "addRecipients"
     }),
     onSubmit() {
       this.doSubmitToBackend();
