@@ -50,13 +50,18 @@ const getters = {
   getField,
   getMessageData(state) {
     return state.messageData;
+  },
+  getRecipients(state) {
+    return state.recipients;
   }
 };
 
 const mutations = {
   updateField,
-  addRecipient(state) {
-    state.recipients.push("");
+  addRecipients(state, autoCompleteMultiQuerySelection) {
+    // eslint-disable-next-line
+    console.log(autoCompleteMultiQuerySelection)
+    state.recipients =  Array.from(autoCompleteMultiQuerySelection)
   },
   updateMessageData(state, updatedMessageData) {
     state.messageData = updatedMessageData;
