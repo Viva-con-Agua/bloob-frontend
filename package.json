@@ -16,7 +16,7 @@
     "knockout-jqueryui": "^2.2.3",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
-    "mosaico": "^0.17.5",
+    "mosaico": "^0.18.9",
     "tinycolor": "0.0.1",
     "vca-widget-base": "^0.1.2",
     "vca-widget-navigation": "^0.2.7",
